@@ -6,11 +6,16 @@
                         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <!--<task:scheduled-tasks>-->
-    <!--<task:scheduled ref="conversionService" method=""/>-->
-    <!--</task:scheduled-tasks>-->
-
-    <context:component-scan base-package="com.tian.spring.quartz.*"/>
+    <context:component-scan base-package="com.tian.spring.*"/>
     <context:annotation-config/>
+    <!--spring 注解使用-->
+    <task:scheduler id="qbScheduler" pool-size="10"/>
+    <task:annotation-driven scheduler="qbScheduler"/>
+
+    <!--使用spring corn 没有问题-->
+    <!--<bean id="taskSpringJob" class="com.tian.spring.quartz.TaskSpringJob"/>-->
+    <!--<task:scheduled-tasks>-->
+    <!--<task:scheduled ref="taskSpringJob" method="jobCronTest" cron="0/1 * * * * ?"/>-->
+    <!--</task:scheduled-tasks>-->
 
 </beans>

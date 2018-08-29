@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
  * @Description:
  * @date 18/8/29下午6:54
  */
-@Component
-public class SpringTaskJob {
+@Component("taskSpringJob")
+public class TaskSpringJob {
 
     @Scheduled(cron = "0/1 * * * * ?")
     public void jobCronTest() {
-        System.out.println(" asdd ===== > " + System.currentTimeMillis());
+        System.out.println(" TaskSpringJob  jobCronTest  ===== > " + System.currentTimeMillis());
     }
 
 }

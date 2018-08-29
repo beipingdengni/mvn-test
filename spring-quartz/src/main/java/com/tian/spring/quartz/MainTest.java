@@ -23,9 +23,6 @@ public class MainTest {
 //        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
 //        schedulerFactoryBean.start();
 
-
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-task.xml");
-
     }
 
 }
