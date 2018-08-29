@@ -1,5 +1,7 @@
 package com.tian.spring.quartz;
 
+import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
@@ -16,35 +18,14 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 public class MainTest {
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, SchedulerException {
 
-
-//        MethodInvokingJobDetailFactoryBean methodInvok = new MethodInvokingJobDetailFactoryBean();
-//
-//        methodInvok.setTargetObject(new MainTest());
-//        methodInvok.setTargetMethod("jobCronTest");
-//        methodInvok.setBeanName("methodInvok_1");
-//
-//        CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
-//
-//        cronTriggerFactoryBean.setJobDetail(methodInvok.getObject());
-//        cronTriggerFactoryBean.setBeanName("cronTriggerFactoryBean_1");
-//        cronTriggerFactoryBean.setCronExpression("0/1 * * * * ?");
-//
 //        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
-//
-//        schedulerFactoryBean.setTriggers(cronTriggerFactoryBean.getObject());
-//
-//        while (true) {
-//            Thread.sleep(10000);
-//        }
+//        schedulerFactoryBean.start();
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring-quartz.xml");
+
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-task.xml");
 
     }
 
-
-    public void jobCronTest() {
-        System.out.println(" asdd ===== > " + System.currentTimeMillis());
-    }
 }

@@ -6,12 +6,13 @@
 
 
     <!--bean-->
-    <bean id="mainTest" class="com.tian.spring.quartz.MainTest"/>
+    <bean id="mainTest" class="com.tian.spring.quartz.MyTestJob"/>
 
     <!--detail-->
     <bean id="mainTestDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="mainTest"/>
         <property name="targetMethod" value="jobCronTest"/>
+        <!--是否允许并发：默认 true -->
         <property name="concurrent" value="false"/>
     </bean>
     <!--cron-->
