@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>spring-activemq</module>
+        <module>spring-quartz</module>
     </modules>
     <packaging>pom</packaging>
 
