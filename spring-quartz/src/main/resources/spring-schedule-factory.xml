@@ -24,6 +24,7 @@
     <!--detail-->
     <bean id="customDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="com.tian.spring.quartz.annotion.CustomSpringQuartz"/>
+        <property name="durability" value="true"/>
     </bean>
     <!--cron-->
     <bean id="customTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
@@ -35,11 +36,11 @@
     <!--scheduleFactory-->
     <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <!-- Triggers集成   动态配置 -->
-        <!--<property name="triggers">-->
-        <!--<list>-->
-        <!--<ref bean="mainTestTrigger"/>-->
-        <!--</list>-->
-        <!--</property>-->
+        <property name="triggers">
+            <list>
+                <ref bean="customTrigger"/>
+            </list>
+        </property>
         <!-- quartz配置文件路径, 指向cluster配置 -->
         <property name="configLocation" value="classpath:quartz.properties"/>
         <!-- 启动时延期2秒开始任务 -->
