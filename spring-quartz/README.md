@@ -71,6 +71,8 @@ MISFIRE_INSTRUCTION_DO_NOTHING = 2
         properties.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
         properties.put("org.quartz.jobStore.isClustered", "true");
         properties.put("org.quartz.jobStore.clusterCheckinInterval", "20000");
+        // 数据转化成blob字段 转为都用string
+        properties.put("org.quartz.jobStore.useProperties", "true");
 
         /**
          * JDBC 配置使用

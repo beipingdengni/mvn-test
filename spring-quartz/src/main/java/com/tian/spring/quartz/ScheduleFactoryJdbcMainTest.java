@@ -45,6 +45,7 @@ public class ScheduleFactoryJdbcMainTest implements Job {
         properties.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
         properties.put("org.quartz.jobStore.isClustered", "true");
         properties.put("org.quartz.jobStore.clusterCheckinInterval", "20000");
+        properties.put("org.quartz.jobStore.useProperties", "true");
 
         /**
          * JDBC 配置使用
@@ -70,29 +71,44 @@ public class ScheduleFactoryJdbcMainTest implements Job {
 
 
         JobDetail jobDetail = JobBuilder.newJob(ScheduleFactoryJdbcMainTest.class)
-                .withDescription("this is a ram job")
+                .withDescription("this is a ram job1 ")
                 .withIdentity("job1", "group1")
                 .build();
 
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0/1 * * * * ?").withMisfireHandlingInstructionDoNothing();
 
         Trigger trigger = TriggerBuilder.newTrigger().startNow()
-                .withDescription("")
+                .withDescription("this is a ram trigger1 ")
                 .withIdentity("trigger1", "group1")
                 .startAt(new Date())
                 .withSchedule(cronScheduleBuilder)
                 .build();
-        if (scheduler.checkExists(trigger.getJobKey())) {
-            scheduler.deleteJob(jobDetail.getKey());
-            scheduler.scheduleJob(jobDetail, trigger);
-        }
 
         scheduler.start();
+        System.out.println("start finish");
+
+        boolean a = scheduler.checkExists(TriggerKey.triggerKey("trigger1", "group1"));
+        System.out.println("a ====> " + a);
+        if (a) {
+            // 停止触发器
+            scheduler.pauseTrigger(trigger.getKey());
+            // 移除触发器
+            scheduler.unscheduleJob(trigger.getKey());
+        }
+        boolean b = scheduler.checkExists(JobKey.jobKey("job1", "group1"));
+        System.out.println("b ====> " + b);
+        if (b) {
+            // 删除任务
+            scheduler.deleteJob(jobDetail.getKey());
+        }
+
+        scheduler.scheduleJob(jobDetail, trigger);
+
 
     }
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        System.out.println(" 启动开始执行job ===> " + Math.ceil(System.currentTimeMillis() / 1000));
+        System.out.println(" 启动开始执行job ===> " + System.currentTimeMillis() / 1000);
     }
 
 }
