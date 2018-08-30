@@ -5,13 +5,26 @@
                         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
+    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">-->
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
+        <!--<property name="url"-->
+                  <!--value="jdbc:mysql://localhost:3306/quartz_test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"/>-->
+        <!--<property name="username" value="root"/>-->
+        <!--<property name="password" value="123456"/>-->
+        <!--<property name="initialSize" value="1"/>-->
+        <!--<property name="maxActive" value="10"/>-->
+        <!--<property name="minIdle" value="5"/>-->
+        <!--<property name="maxIdle" value="100"/>-->
+        <!--<property name="maxWait" value="60000"/>-->
+    <!--</bean>-->
+
     <!--bean-->
-    <bean id="mainTest" class="com.tian.spring.quartz.MyTestJob"/>
+    <bean id="mainTest" class="com.tian.spring.quartz.ScheduleFactorySpringMainTest"/>
 
     <!--detail-->
     <bean id="mainTestDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject" ref="mainTest"/>
-        <property name="targetMethod" value="jobCronTest"/>
+        <property name="targetMethod" value="execute"/>
         <!--是否允许并发：默认 true -->
         <property name="concurrent" value="false"/>
     </bean>
@@ -21,9 +34,33 @@
         <property name="cronExpression" value="0/1 * * * * ?"/>
         <property name="misfireInstruction" value="2"/>
     </bean>
+
     <!--scheduleFactory-->
-    <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-    </bean>
+    <!--<bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        &lt;!&ndash; Triggers集成   动态配置 &ndash;&gt;
+        <property name="triggers">
+            <list>
+                <ref bean="mainTestTrigger"/>
+            </list>
+        </property>
+        &lt;!&ndash; quartz配置文件路径, 指向cluster配置 &ndash;&gt;
+        <property name="configLocation" value="classpath:quartz.properties"/>
+        &lt;!&ndash; 启动时延期2秒开始任务 &ndash;&gt;
+        <property name="startupDelay" value="2"/>
+        &lt;!&ndash; 保存Job数据到数据库所需的数据源 &ndash;&gt;
+        <property name="dataSource" ref="dataSource"/>
+        &lt;!&ndash; Job接受applicationContext的成员变量名 &ndash;&gt;
+        &lt;!&ndash;<property name="schedulerContextAsMap">&ndash;&gt;
+            &lt;!&ndash;<map>&ndash;&gt;
+                &lt;!&ndash;&lt;!&ndash; spring管理的服务需要放到这里，才能够注入成功 &ndash;&gt;&ndash;&gt;
+                &lt;!&ndash;<description>schedulerContextAsMap</description>&ndash;&gt;
+                &lt;!&ndash;<entry key="allocationOrderService" value-ref="allocationOrderService"/>&ndash;&gt;
+            &lt;!&ndash;</map>&ndash;&gt;
+        &lt;!&ndash;</property>&ndash;&gt;
+        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+        &lt;!&ndash; 修改job时，更新到数据库 &ndash;&gt;
+        <property name="overwriteExistingJobs" value="true"/>
+    </bean>-->
 
 
 </beans>
