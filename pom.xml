@@ -10,6 +10,7 @@
     <modules>
         <module>spring-activemq</module>
         <module>spring-quartz</module>
+        <module>spring-rabbitmq</module>
     </modules>
     <packaging>pom</packaging>
 
