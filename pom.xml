@@ -11,6 +11,7 @@
         <module>spring-activemq</module>
         <module>spring-quartz</module>
         <module>spring-rabbitmq</module>
+        <module>spring-tomcat</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -94,13 +95,19 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
+            <artifactId>spring-aop</artifactId>
             <version>${spring.verison}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
+            <artifactId>spring-web</artifactId>
             <version>${spring.verison}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
