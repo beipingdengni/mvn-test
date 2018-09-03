@@ -7,11 +7,18 @@
 
     <import resource="spring-base.xml"/>
 
+    <bean id="spittleListener" class="com.tian.spring.rabbitmq.SpringRabbitMqConsumer"/>
+
+    <!--<rabbit:listener-container connection-factory="connectionFactory">-->
+        <!--<rabbit:listener ref="spittleListener" method="onMessage"-->
+                         <!--queues="spittle.alert.queue.1,spittle.alert.queue.2,spittle.alert.queue.3"/>-->
+    <!--</rabbit:listener-container>-->
+
+
     <rabbit:listener-container connection-factory="connectionFactory">
         <rabbit:listener ref="spittleListener" method="onMessage"
-                         queues="spittle.alert.queue.1,spittle.alert.queue.2,spittle.alert.queue.3"/>
+                         queues="direct-queue-1"/>
     </rabbit:listener-container>
-    <bean id="spittleListener" class="com.tian.spring.rabbitmq.SpringRabbitMqConsumer"/>
 
 
 </beans>

@@ -50,6 +50,7 @@ public class ProduceMq {
                 //param String exchange, String routingKey, BasicProperties props, byte[] body
                 channel.basicPublish("", queue_name, null, result.getBytes());
             }
+            System.out.println("end   ======>  end");
             TimeUnit.SECONDS.sleep(10);
         }
 

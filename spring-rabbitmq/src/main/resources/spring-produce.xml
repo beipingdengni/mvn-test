@@ -10,7 +10,12 @@
     <bean id="jsonMessageConverter"
           class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
     <!--创建消息队列模板-->
-    <rabbit:template id="rabbitTemplate" connection-factory="connectionFactory"
-                     exchange="spittle.fanout" message-converter="jsonMessageConverter"/>
+    <!--<rabbit:template id="rabbitTemplate" connection-factory="connectionFactory"-->
+    <!--exchange="spittle.fanout" message-converter="jsonMessageConverter"/>-->
+
+    <!--创建消息队列模板-->
+    <rabbit:template id="rabbitTemplate2" connection-factory="connectionFactory"
+                     exchange="direct-exchange-queue" message-converter="jsonMessageConverter"/>
+
 
 </beans>

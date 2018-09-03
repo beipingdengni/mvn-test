@@ -17,16 +17,19 @@ public class SpringRabbitMqProduce {
 
     public static void main(String[] args) throws InterruptedException {
 
-        String queue_name = "rabbit-mq-queue1";
+        String queue_name = "direct-queue-1";
 
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-produce.xml");
 
-        AmqpTemplate rabbitTemplate = context.getBean("rabbitTemplate", AmqpTemplate.class);
+//        AmqpTemplate rabbitTemplate = context.getBean("rabbitTemplate", AmqpTemplate.class);
+
+        AmqpTemplate rabbitTemplate2 = context.getBean("rabbitTemplate2", AmqpTemplate.class);
 
         while (true) {
             for (int i = 0; i < 100; i++) {
-                rabbitTemplate.convertAndSend(queue_name, "spring --- hello world  ,  ===>  " + i);
+                rabbitTemplate2.convertAndSend(queue_name, "spring --- hello world  ,  ===>  " + i);
             }
+            System.out.println("end   ======>  end");
             TimeUnit.SECONDS.sleep(10);
         }
 
