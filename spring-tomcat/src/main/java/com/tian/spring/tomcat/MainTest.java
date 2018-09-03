@@ -71,6 +71,7 @@ public class MainTest {
          * acceptCount：允许的最大连接数，应大于等于maxProcessors，默认值为100
          * enableLookups：是否反查域名，取值为：true或false。为了提高处理能力，应设置为false
          * connectionTimeout：网络连接超时，单位：毫秒。设置为0表示永不超时，这样设置有隐患的。通常可设置为30000毫秒。
+         * URIEncoding:UTF-8
          */
 
         String contextPath = "";
