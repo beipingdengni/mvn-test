@@ -16,11 +16,15 @@
     <rabbit:admin connection-factory="connectionFactory"/>
 
     <!--定义消息队列-->
-    <rabbit:queue id="rabbit-mq-queue1" name="rabbit-mq-queue1" auto-declare="false" durable="false"/>
+    <rabbit:queue name="spittle.alert.queue.1" durable="true" auto-delete="false"/>
+    <rabbit:queue name="spittle.alert.queue.2" durable="true" auto-delete="false"/>
+    <rabbit:queue name="spittle.alert.queue.3" durable="true" auto-delete="false"/>
     <!--绑定队列-->
-    <rabbit:fanout-exchange id="rabbit-mq.fanout" name="rabbit-mq.fanout">
+    <rabbit:fanout-exchange id="spittle.fanout" name="spittle.fanout" durable="true">
         <rabbit:bindings>
-            <rabbit:binding queue="rabbit-mq-queue1"></rabbit:binding>
+            <rabbit:binding queue="spittle.alert.queue.1"></rabbit:binding>
+            <rabbit:binding queue="spittle.alert.queue.2"></rabbit:binding>
+            <rabbit:binding queue="spittle.alert.queue.3"></rabbit:binding>
         </rabbit:bindings>
     </rabbit:fanout-exchange>
 

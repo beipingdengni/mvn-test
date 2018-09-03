@@ -13,5 +13,4 @@
     <rabbit:template id="rabbitTemplate" connection-factory="connectionFactory"
                      exchange="spittle.fanout" message-converter="jsonMessageConverter"/>
 
-
 </beans>
