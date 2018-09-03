@@ -2,8 +2,12 @@ package com.tian.spring.tomcat;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
+import org.apache.catalina.Wrapper;
 import org.apache.catalina.core.StandardContext;
+import org.apache.catalina.core.StandardWrapper;
 import org.apache.catalina.startup.Tomcat;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.servlet.DispatcherServlet;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +17,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileAttribute;
 import java.nio.file.attribute.FileAttributeView;
 import java.nio.file.attribute.PosixFilePermissions;
+import java.util.Arrays;
 
 /**
  * @author tianbeiping
@@ -31,46 +36,39 @@ public class MainTest {
         System.out.println(tempDir);
 
         Path tempDirectory = Files.createTempDirectory("tomcat");
-        tempDir=tempDirectory.toString();
+        tempDir = tempDirectory.toString();
         System.out.println(tempDir);
 
 
         Tomcat tomcat = new Tomcat();
-        tomcat.setPort(9080);
         tomcat.setBaseDir(tempDir);
+        tomcat.setPort(9080);
         tomcat.getHost().setAutoDeploy(false);
 
-        String contextPath = "/book";
+        String contextPath = "";
         StandardContext context = new StandardContext();
         context.setPath(contextPath);
         context.addLifecycleListener(new Tomcat.FixContextListener());
+
+//        context.addParameter("contextConfigLocation", "classpath:spring-context.xml");
+//        ContextLoaderListener contextLoaderListener = new ContextLoaderListener();
+//        context.addApplicationLifecycleListener(contextLoaderListener);
+
         tomcat.getHost().addChild(context);
 
-        tomcat.addServlet(contextPath, "homeServlet", new HomeServlet());
-        context.addServletMappingDecoded("/home", "homeServlet");
+        // servlet
+        Wrapper wrapper = new Tomcat.ExistingStandardWrapper(new DispatcherServlet());
+        context.addChild(wrapper);
+        wrapper.setName("defaultServletName");
+        wrapper.addMapping("/*");
+        wrapper.addInitParameter("contextConfigLocation", "classpath:spring-mvc.xml");
+        wrapper.setLoadOnStartup(1);
+
+
+        System.out.println(" start ....... ");
+
         tomcat.start();
-
-
-
-//        Tomcat tomcat = new Tomcat();
-//        tomcat.setBaseDir(tempDir);
-//        tomcat.setPort(8080);
-//        tomcat.getHost().setAutoDeploy(false);
-//
-//        String contextPath = "/book";
-//        Context context = new StandardContext();
-//        context.setPath(contextPath);
-//        context.addLifecycleListener(new Tomcat.FixContextListener());
-//
-//        tomcat.getHost().addChild(context);
-//
-//        tomcat.addServlet(contextPath, "HelloServlet", new HelloServlet());
-////        context.addServletMappingDecoded("/hello", "HelloServlet");
-//        context.addServletMapping("/hello", "HelloServlet");
-//
-//        System.out.println(" start ....... ");
-//        context.start();
-//        tomcat.getServer().await();
+        tomcat.getServer().await();
     }
 
 }
