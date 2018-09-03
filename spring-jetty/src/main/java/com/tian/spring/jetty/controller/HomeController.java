@@ -1,4 +1,4 @@
-package con.tian.spring.jetty.controller;
+package com.tian.spring.jetty.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
