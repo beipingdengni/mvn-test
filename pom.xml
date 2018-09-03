@@ -13,6 +13,7 @@
         <module>spring-rabbitmq</module>
         <module>spring-tomcat</module>
         <module>spring-jetty</module>
+        <module>spring-netty</module>
     </modules>
     <packaging>pom</packaging>
 
