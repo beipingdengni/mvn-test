@@ -41,6 +41,7 @@ public class MainTest {
 
         // 创建一个HTTP的连接，配置监听主机，端口，以及超时时间
         ServerConnector http = new ServerConnector(server);
+        //Connector http = new SelectChannelConnector(server);
         http.setHost("localhost");
         http.setPort(8080);
         http.setIdleTimeout(30000);
