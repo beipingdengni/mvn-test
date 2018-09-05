@@ -1,4 +1,4 @@
-package com.tian.spring.myabtis.mapper;
+package com.tian.spring.mybatis.mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +11,6 @@ import java.util.Map;
  * @date 18/9/5下午6:08
  */
 public interface PersonMapper {
-
 
     List<Map<String,Object>> selectPersonList();
 

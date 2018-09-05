@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.tian.spring.myabtis.mapper.PersonMapper">
+<mapper namespace="com.tian.spring.mybatis.mapper.PersonMapper">
     <!--<resultMap id="BaseResultMap" type="cn.mwee.service.entity.timer.JobEntity">-->
     <!--&lt;!&ndash;-->
     <!--WARNING - @mbggenerated-->
@@ -10,9 +10,11 @@
     <!--<result column="JobName" property="jobname" jdbcType="VARCHAR"/>-->
     <!--<result column="ContentID" property="contentid" jdbcType="INTEGER"/>-->
     <!--</resultMap>-->
-
-    <select id="selectPersonList" resultType="map">
-        select * from t_person
+    <!--
+     select * from t_person
+    -->
+    <select id="selectPersonList" resultType="java.util.Map">
+        select * from `user`
     </select>
 
 </mapper>

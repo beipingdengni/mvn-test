@@ -1,4 +1,4 @@
-package com.tian.spring.myabtis;
+package com.tian.spring.mybatis;
 
 /**
  * @author tianbeiping

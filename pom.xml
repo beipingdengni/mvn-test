@@ -24,7 +24,7 @@
         <dubbo.version>2.6.2</dubbo.version>
         <apache.logging.verion>2.10.0</apache.logging.verion>
         <slf4j.verison>1.7.25</slf4j.verison>
-        <jdbc.verion>6.0.6</jdbc.verion>
+        <jdbc.verion>6.0.2</jdbc.verion>
         <druid.verion>1.1.10</druid.verion>
     </properties>
 

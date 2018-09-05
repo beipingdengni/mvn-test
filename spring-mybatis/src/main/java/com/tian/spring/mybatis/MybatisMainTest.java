@@ -1,6 +1,6 @@
-package com.tian.spring.myabtis;
+package com.tian.spring.mybatis;
 
-import com.tian.spring.myabtis.mapper.PersonMapper;
+import com.tian.spring.mybatis.mapper.PersonMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -26,11 +26,15 @@ public class MybatisMainTest {
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader, "development");
 
         SqlSession sqlSession = factory.openSession();
+//        List<Map<String, Object>> maps = sqlSession.selectList("com.tian.spring.mybatis.mapper.PersonMapper.selectPersonList");
 
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
         List<Map<String, Object>> maps = mapper.selectPersonList();
         System.out.println(maps);
 
+
+        sqlSession.commit();
+        sqlSession.close();
 
     }
 }

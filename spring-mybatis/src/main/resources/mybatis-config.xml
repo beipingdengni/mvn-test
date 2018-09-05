@@ -26,6 +26,7 @@
     <!--<package name="cn.mwee.service.entity"/>-->
     <!--</typeAliases>-->
     <mappers>
+        <!--<mapper resource="src/main/resources/mybatis/person.xml"/>-->
         <mapper resource="mybatis/person.xml"/>
     </mappers>
 
