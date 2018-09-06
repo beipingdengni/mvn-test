@@ -10,8 +10,10 @@
    set global time_zone = '+8:00';
    flush privileges;
 ```
-数据库连接
-jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&&serverTimezone=UTC
+1. 数据库连接
+1. jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+1. serverTimezone=UTC+8    useSSL=true
+
 
 #### mybatis 简单的代码调用
 ```java
@@ -97,8 +99,43 @@ public class MybatisMainTest {
     <!--</plugins>-->
 </configuration> 
 ```
-#### mybatis-config
-``` xml
+#### create t_person demo 表
+```sql
+   DROP TABLE IF EXISTS `t_person`;
+   CREATE TABLE `t_person` (
+     `id` int(11) NOT NULL AUTO_INCREMENT,
+     `name` varchar(255) DEFAULT NULL,
+     `age` int(11) DEFAULT NULL,
+     `pwd` varchar(255) DEFAULT NULL,
+     PRIMARY KEY (`id`)
+   ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
    
+
+```
+#### 数据库相关字节编码处理
+```text
+
+# 创建数据库，指定编码   mysql4.x 中编码  latin1   latin1_swedish_ci
+# utf-8
+CREATE DATABASE IF NOT EXISTS yourdbname DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+# gbk 
+create database yourdb DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;
+# 查看编码
+show variables like 'character%';
+   
+sql语句数据库的字符集
+mysql>use mydb
+mysql>alter database mydb character set utf-8;
+创建数据库指定数据库的字符集
+mysql>create database mydb character set utf-8;
+      
+配置修改/var/lib/mysql/mydb/db.opt
+default-character-set=latin1
+default-collation=latin1_swedish_ci
+为
+default-character-set=utf8
+default-collation=utf8_general_ci
+重起MySQL:
+
 ```
 

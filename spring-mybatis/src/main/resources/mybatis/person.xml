@@ -12,9 +12,11 @@
     <!--</resultMap>-->
     <!--
      select * from t_person
+     select * from `user`
     -->
     <select id="selectPersonList" resultType="java.util.Map">
-        select * from `user`
+
+        select * from t_person
     </select>
 
 </mapper>
