@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -20,6 +21,13 @@ public class MyBaseApplicationContext implements ApplicationContextAware, Initia
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private ApplicationContext applicationContext;
+
+    public MyBaseApplicationContext() {
+        logger.info("测试 数据 构造函数  ====>  {}", "MyBaseApplicationContext");
+    }
+
+    @Autowired
+    private MyBaseCommon myBaseCommon;
 
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
@@ -37,8 +45,6 @@ public class MyBaseApplicationContext implements ApplicationContextAware, Initia
 
     public void sayHello(String str) {
 
-        MyBaseCommon bean = applicationContext.getBean(MyBaseCommon.class);
-
-        logger.info("sayHello ====>{}", bean.testHello(str));
+        logger.info("sayHello ====>{}", myBaseCommon.testHello(str));
     }
 }

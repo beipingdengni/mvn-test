@@ -15,8 +15,7 @@
      select * from `user`
     -->
     <select id="selectPersonList" resultType="java.util.Map">
-
-        select * from t_person
+        select * from `user`
     </select>
 
 </mapper>
