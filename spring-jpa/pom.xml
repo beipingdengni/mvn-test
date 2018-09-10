@@ -17,6 +17,13 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>2.0.9.RELEASE</version>
         </dependency>
+        <!--jpa 分页中会使用到-->
+        <dependency>
+            <groupId>com.querydsl</groupId>
+            <artifactId>querydsl-jpa</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+
     </dependencies>
 
 </project>
