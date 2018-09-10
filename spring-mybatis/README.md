@@ -104,12 +104,14 @@ public class MybatisMainTest {
    DROP TABLE IF EXISTS `t_person`;
    CREATE TABLE `t_person` (
      `id` int(11) NOT NULL AUTO_INCREMENT,
-     `name` varchar(255) DEFAULT NULL,
+     `name` varchar(255) DEFAULT NULL comment '注解',
      `age` int(11) DEFAULT NULL,
      `pwd` varchar(255) DEFAULT NULL,
+     `createDate` timestamp default current_timestamp() comment '默认时间'
      PRIMARY KEY (`id`)
-   ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+   ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
    
+   alter table t_user_remind add index I_SHONPID_USERID(D_SHOP_ID,D_USER_ID);
 
 ```
 #### 数据库相关字节编码处理
@@ -136,6 +138,39 @@ default-collation=latin1_swedish_ci
 default-character-set=utf8
 default-collation=utf8_general_ci
 重起MySQL:
+
+mysql 相关操作
+添加主键
+ALTER TABLE table_name ADD PRIMARY KEY(id);
+添加索引
+//普通索引
+alter table table_name add index index_name (column_list) ;
+//唯一索引
+alter table table_name add unique (column_list) ;
+//主键索引 column_list 对个值，复合主键
+alter table table_name add primary key (column_list) ;
+删除索引
+alter table table_name drop index index_name ;
+// 删除主键
+alter table table_name drop primary key ;
+
+添加字段
+alter table id_name add age int,add address varchar(11) DEFAULT NULL;
+删除字段
+alter table id_name drop column age,drop column address;
+修改字段
+alter table user MODIFY column_field_name VARCHAR(10); 
+修改字段放置位置
+ALTER TABLE user10 MODIFY card CHAR(10) AFTER test;
+更新表，添加设置默认值
+ALTER TABLE user11 ALTER age SET DEFAUTL 18;
+
+修改表的存储引擎
+ALTER TABLE user12 ENGINE=MyISAM;
+ALTER TABLE user12 ENGINE=INNODB;
+
+修改自增长的值
+ALTER TABLE tb_name AUTO_INCREMENT=值
 
 ```
 
