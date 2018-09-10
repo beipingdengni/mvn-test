@@ -28,11 +28,33 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath*:mybatis/**/*.xml"/>
         <property name="typeAliasesPackage" value="com.tian.spring.mybatis.entity"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                            helperDialect=mysql
+                            reasonable=true
+                            supportMethodsArguments=true
+                            params=count=countSql
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.tian.spring.mybatis.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
+        <property name="properties">
+            <value>
+                mappers=tk.mybatis.mapper.common.Mapper
+                notEmpty=false
+                IDENTITY=MYSQL
+            </value>
+        </property>
     </bean>
 
 

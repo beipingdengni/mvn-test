@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--<properties resource="src/main/resources/mysql-config.properties"/>-->
+    <!--<properties resource="mysql-config.properties"/>-->
+
+    <settings>
+        <setting name="logImpl" value="LOG4J2"/>
+    </settings>
+
+    <plugins>
+        <!--<plugin interceptor="com.github.pagehelper.PageHelper">-->
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <!--下面的参数详解见http://git.oschina.net/free/Mybatis_PageHelper/blob/master/wikis/HowToUse.markdown-->
+            <!--<property name="dialect" value="mysql"/>  版本偏低的使用-->
+            <property name="helperDialect" value="mysql"/>
+            <property name="reasonable" value="true"/>
+            <property name="offsetAsPageNum" value="true"/>
+            <property name="rowBoundsWithCount" value="true"/>
+            <property name="pageSizeZero" value="true"/>
+        </plugin>
+        <!--此处做上备注，在 3.1.3 版本有，如果是大于 4.X 版本的就不存在此类 -->
+        <plugin interceptor="tk.mybatis.mapper.mapperhelper.MapperInterceptor">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="IDENTITY" value="MYSQL"/>
+            <property name="notEmpty" value="true"/>
+        </plugin>
+    </plugins>
+
+</configuration>
