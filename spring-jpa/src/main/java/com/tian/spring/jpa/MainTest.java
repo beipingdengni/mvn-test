@@ -19,7 +19,7 @@ public class MainTest {
 
     public static void main(String[] args) {
 
-        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring-jpa.xml");
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring-hibernate.xml");
         //检查hibernate配置
         SessionFactory sessionFactory = ctx.getBean(SessionFactory.class);
 

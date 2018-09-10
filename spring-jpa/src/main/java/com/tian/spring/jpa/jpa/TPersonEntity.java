@@ -1,4 +1,4 @@
-package com.tian.spring.jpa.entity;
+package com.tian.spring.jpa.jpa;
 
 import javax.persistence.*;
 
@@ -7,7 +7,7 @@ import javax.persistence.*;
  * @Title: TPersonEntity
  * @ProjectName mvn-test
  * @Description:
- * @date 18/9/10下午3:37
+ * @date 18/9/10下午4:01
  */
 @Entity
 @Table(name = "t_person", schema = "tian", catalog = "")
@@ -17,8 +17,8 @@ public class TPersonEntity {
     private Integer age;
     private String pwd;
 
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -56,7 +56,6 @@ public class TPersonEntity {
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
-
 
     @Override
     public String toString() {
