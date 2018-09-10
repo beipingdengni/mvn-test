@@ -67,4 +67,18 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>
 
 
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+    <!--<tx:attributes>-->
+    <!--<tx:method name="select*" read-only="true"/>-->
+    <!--<tx:method name="update*" propagation="REQUIRED"/>-->
+    <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+    <!--&lt;!&ndash; 事务入口 &ndash;&gt;-->
+    <!--<aop:config>-->
+    <!--<aop:pointcut id="allServiceMethod" expression="execution(* your service implements package.*.*(..))" />-->
+    <!--<aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice" />-->
+    <!--</aop:config>-->
+
+
 </beans>

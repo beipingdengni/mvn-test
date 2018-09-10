@@ -16,6 +16,7 @@
         <module>spring-netty</module>
         <module>spring-analysis</module>
         <module>spring-mybatis</module>
+        <module>spring-jpa</module>
     </modules>
     <packaging>pom</packaging>
 

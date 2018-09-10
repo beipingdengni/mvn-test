@@ -23,35 +23,30 @@
         <property name="minIdle" value="5"/>
     </bean>
 
-
-    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="configLocation" value="mybatis-config-plugin.xml"/>
-        <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath*:mybatis/**/*.xml"/>
-        <property name="typeAliasesPackage" value="com.tian.spring.mybatis.entity"/>
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <!-- 配置数据源 -->
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="packagesToScan" value="com.tian.spring.jpa.entity"></property>
+        <!--hibernate 的基本配置 -->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+            </props>
+        </property>
     </bean>
 
-    <!--<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">-->
-        <!--<property name="basePackage" value="com.tian.spring.mybatis.mapper"/>-->
-        <!--<property name="sqlSessionFactoryBeanName" value="sessionFactory"/>-->
-        <!--<property name="properties">-->
-            <!--<value>-->
-                <!--mappers=tk.mybatis.mapper.common.Mapper-->
-                <!--notEmpty=false-->
-                <!--IDENTITY=MYSQL-->
-            <!--</value>-->
-        <!--</property>-->
-    <!--</bean>-->
-
-
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
+    <!-- 配置Spring声明式事务 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
     </bean>
+
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <aop:aspectj-autoproxy proxy-target-class="true"/>
-
 
     <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
     <!--<tx:attributes>-->
