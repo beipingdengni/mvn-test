@@ -14,13 +14,6 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 }
 ```
 
-##### defaultlistbeanfactory 类结构继承关系 
-![defaultlistbeanfactory.jpg](img/defaultlistbeanfactory.jpg)
-![tuopu-defaultlistbeanfactory.jpg](img/tuopu-defaultlistbeanfactory.jpg)
-
-
-
-
 #### 类定义前，定义后  对bean 的处理
 ```java
 public interface BeanPostProcessor {
@@ -59,3 +52,9 @@ public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) t
 */
 
 ```
+
+
+##### defaultlistbeanfactory 类结构继承关系 
+![defaultlistbeanfactory.jpg](img/defaultlistbeanfactory.jpg)
+![tuopu-defaultlistbeanfactory.jpg](img/tuopu-defaultlistbeanfactory.jpg)
+
