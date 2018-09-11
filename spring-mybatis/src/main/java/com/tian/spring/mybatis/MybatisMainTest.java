@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.*;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +31,11 @@ public class MybatisMainTest {
 //        List<Map<String, Object>> maps = sqlSession.selectList("com.tian.spring.mybatis.mapper.PersonMapper.selectPersonList");
 
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        List<Map<String, Object>> maps = mapper.selectPersonList();
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("age", "12");
+        map.put("dateNow", new Date());
+        List<Map<String, Object>> maps = mapper.selectPersonList(map);
         System.out.println(maps);
 
 

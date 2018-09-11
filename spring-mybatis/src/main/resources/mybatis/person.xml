@@ -14,8 +14,10 @@
      select * from t_person
      select * from `user`
     -->
-    <select id="selectPersonList" resultType="java.util.Map">
-        select * from `user`
+    <select id="selectPersonList" resultType="java.util.Map" parameterType="map">
+        select * from t_person
+        where age>#{age}
+        and newDate<![CDATA[<=]]>#{dateNow}
     </select>
 
 </mapper>

@@ -1,5 +1,7 @@
 package com.tian.spring.mybatis.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,6 @@ import java.util.Map;
  */
 public interface PersonMapper {
 
-    List<Map<String,Object>> selectPersonList();
+    List<Map<String,Object>> selectPersonList(Map<String,Object> map);
 
 }
