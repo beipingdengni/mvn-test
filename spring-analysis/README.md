@@ -1,4 +1,5 @@
-
+### spring 启动关键位置
+[启动类具体分析--->refresh()](refresh.md)
 
 #### BeanFactory 实现类
 [BeanFactory具体分析](beanfactory.md)
@@ -13,13 +14,11 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 }
 ```
 
-##### 类结构继承关系
+##### defaultlistbeanfactory 类结构继承关系 
 ![defaultlistbeanfactory.jpg](img/defaultlistbeanfactory.jpg)
 ![tuopu-defaultlistbeanfactory.jpg](img/tuopu-defaultlistbeanfactory.jpg)
 
 
-### spring 启动关键位置
-[启动类具体分析](refresh.md)
 
 
 #### 类定义前，定义后  对bean 的处理
