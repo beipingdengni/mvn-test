@@ -1,0 +1,7 @@
+http\://www.beipingdengni.com/spring/schema/database-client=com.tian.spring.xsd.selfdatabase.DatabaseClient
+
+http\://www.beipingdengni.com/spring/schema/people=com.tian.spring.xsd.people.StudentNamespaceHandler
+
+
+
+#http\://www.springframework.org/schema/jms=org.springframework.jms.config.JmsNamespaceHandler

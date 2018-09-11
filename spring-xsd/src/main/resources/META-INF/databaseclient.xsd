@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns="http://www.beipingdengni.com/spring/schema/database-client"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:beans="http://www.springframework.org/schema/beans"
+            targetNamespace="http://www.beipingdengni.com/spring/schema/database-client"
+            elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xsd:import namespace="http://www.springframework.org/schema/beans"/>
+
+    <xsd:element name="database">
+        <xsd:annotation>
+            <xsd:documentation>connection to client</xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:complexContent>
+                <!-- 继承定义 从namespace="http://www.springframework.org/schema/beans" -->
+                <xsd:extension base="beans:identifiedType">
+                    <xsd:attribute name="driver" type="xsd:string" default="com.mysql.jdbc.Driver"/>
+                    <xsd:attribute name="url" type="xsd:string"/>
+                    <xsd:attribute name="username" type="xsd:string" default="root"/>
+                    <xsd:attribute name="password" type="xsd:string" default="123456"/>
+                    <xsd:attribute name="host" type="xsd:string" default="127.0.0.1"/>
+                    <xsd:attribute name="dbname" type="xsd:string" default="demo"/>
+                    <xsd:attribute name="characterEncoding" type="xsd:string" default="utf8">
+                        <!--<xsd:simpleType>-->
+                            <!--<xsd:restriction base="xsd:string">-->
+                                <!--<xsd:enumeration value="utf8" />-->
+                                <!--<xsd:enumeration value="gbk" />-->
+                            <!--</xsd:restriction>-->
+                        <!--</xsd:simpleType>-->
+                    </xsd:attribute>
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+
+    </xsd:element>
+
+</xsd:schema>
