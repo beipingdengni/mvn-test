@@ -60,12 +60,3 @@ public class StudentNamespaceHandler extends NamespaceHandlerSupport {
     
 </beans>
 ```
-
-#### 动态代理接口 无实现类使用
-``
-```
-#### 代理类实现
-```java
-   
-```
-
