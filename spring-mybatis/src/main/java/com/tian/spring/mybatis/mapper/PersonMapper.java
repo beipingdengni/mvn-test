@@ -12,6 +12,6 @@ import java.util.Map;
  */
 public interface PersonMapper {
 
-    List<Map<String,Object>> selectPersonList();
+    List<Map<String,Object>> selectPersonList(List<String> ls);
 
 }

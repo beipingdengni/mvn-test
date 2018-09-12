@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class MybatisMainTest {
 //        List<Map<String, Object>> maps = sqlSession.selectList("com.tian.spring.mybatis.mapper.PersonMapper.selectPersonList");
 
         PersonMapper mapper = sqlSession.getMapper(PersonMapper.class);
-        List<Map<String, Object>> maps = mapper.selectPersonList();
+        List<Map<String, Object>> maps = mapper.selectPersonList(Arrays.asList("123123","adsasdasd"));
         System.out.println(maps);
 
 
