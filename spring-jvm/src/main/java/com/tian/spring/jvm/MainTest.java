@@ -1,5 +1,11 @@
 package com.tian.spring.jvm;
 
+import com.google.common.collect.Lists;
+import com.tian.spring.jvm.vo.PersonVo;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author tianbeiping
  * @Title: IconLabelData
@@ -10,7 +16,27 @@ package com.tian.spring.jvm;
 public class MainTest {
 
 
-    public static void main(String[] args) {
+    /**
+     * -Xms10m -Xmx20m -XX:+PrintGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC
+     *
+     * @param args
+     * @throws InterruptedException
+     */
+    public static void main(String[] args) throws InterruptedException {
+
+        List<PersonVo> list = Lists.newArrayList();
+
+        int i = 0;
+        while (i < Integer.MAX_VALUE) {
+            i++;
+            PersonVo vo = new PersonVo();
+            vo.setAge(18);
+            vo.setName("tian");
+            vo.setSex(0);
+            list.add(vo);
+//            TimeUnit.MICROSECONDS.sleep(10);
+        }
+        System.out.println(list);
 
     }
 

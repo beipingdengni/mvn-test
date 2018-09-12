@@ -1,5 +1,7 @@
 package com.tian.spring.jvm.vo;
 
+import lombok.Data;
+
 /**
  * @author tianbeiping
  * @Title: IconLabelData
@@ -9,4 +11,9 @@ package com.tian.spring.jvm.vo;
  */
 @Data
 public class PersonVo {
+
+    private String name;
+    private Integer age;
+    private Integer sex;
+
 }

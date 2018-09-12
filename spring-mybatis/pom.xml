@@ -14,8 +14,10 @@
     <properties>
         <mybatis.verison>3.4.6</mybatis.verison>
         <mybatis.spring.verison>1.3.2</mybatis.spring.verison>
-        <tk.mybatis.verison>4.0.4</tk.mybatis.verison>
+        <tk.mybatis.verison>3.1.3</tk.mybatis.verison>
+        <!--<tk.mybatis.verison>4.0.4</tk.mybatis.verison>-->
         <mybatis-generator.version>1.3.7</mybatis-generator.version>
+        <pagehelper.verison>5.1.6</pagehelper.verison>
     </properties>
 
     <dependencies>
@@ -37,6 +39,13 @@
             <artifactId>mapper</artifactId>
             <version>${tk.mybatis.verison}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>${pagehelper.verison}</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -82,6 +91,14 @@
                         <version>${tk.mybatis.verison}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

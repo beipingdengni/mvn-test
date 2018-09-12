@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <!--<util:properties location="mysql-config.properties"/>-->
+
+    <context:property-placeholder location="classpath*:mysql-config.properties"/>
+
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <property name="maxWait" value="10"/>
+        <property name="initialSize" value="5"/>
+        <property name="maxActive" value="5"/>
+        <property name="minIdle" value="5"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <!-- 配置数据源 -->
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="packagesToScan" value="com.tian.spring.jpa.entity"></property>
+        <!--hibernate 的基本配置 -->
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 配置Spring声明式事务 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+    <!--<tx:attributes>-->
+    <!--<tx:method name="select*" read-only="true"/>-->
+    <!--<tx:method name="update*" propagation="REQUIRED"/>-->
+    <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+    <!--&lt;!&ndash; 事务入口 &ndash;&gt;-->
+    <!--<aop:config>-->
+    <!--<aop:pointcut id="allServiceMethod" expression="execution(* your service implements package.*.*(..))" />-->
+    <!--<aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice" />-->
+    <!--</aop:config>-->
+
+
+</beans>

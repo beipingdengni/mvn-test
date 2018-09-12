@@ -4,8 +4,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 /**
  * @author tianbeiping
@@ -17,14 +19,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class MybaseBeanDefinedRegister implements BeanDefinitionRegistryPostProcessor {
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        ClassPathBeanDefinitionScanner scanner=new ClassPathBeanDefinitionScanner(registry);
 
-        scanner.scan("com.tian.spring.analysis.dao");
+        String basePackage = "com.tian.spring.analysis.dao";
+        ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(registry);
+        scanner.scan(StringUtils.tokenizeToStringArray(basePackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
 
     }
 
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException {
-
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException {
 
     }
 }

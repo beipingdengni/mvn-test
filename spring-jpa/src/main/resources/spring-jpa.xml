@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+
+    <!--<util:properties location="mysql-config.properties"/>-->
+
+    <context:property-placeholder location="classpath*:mysql-config.properties"/>
+
+    <context:component-scan base-package="com.tian.spring.jpa"/>
+    <context:annotation-config/>
+
+
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <property name="maxWait" value="10"/>
+        <property name="initialSize" value="5"/>
+        <property name="maxActive" value="5"/>
+        <property name="minIdle" value="5"/>
+    </bean>
+
+    <!-- 配置 JPA 的 EntityManagerFactory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"></bean>
+        </property>
+        <property name="packagesToScan" value="com.tian.spring.jpa.jpa"></property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <!--<prop key="hibernate.cache.use_second_level_cache">true</prop>-->
+                <!--<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>-->
+                <!--<prop key="hibernate.cache.use_query_cache">true</prop>-->
+            </props>
+        </property>
+        <!--<property name="sharedCacheMode" value="ENABLE_SELECTIVE"></property>-->
+    </bean>
+
+    <!-- 配置事务 -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"></property>
+    </bean>
+
+    <!-- 配置支持基于注解的事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <!-- 配置 SpringData -->
+    <jpa:repositories base-package="com.tian.spring.jpa.repository"
+                      entity-manager-factory-ref="entityManagerFactory"></jpa:repositories>
+
+
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+    <!--<tx:attributes>-->
+    <!--<tx:method name="select*" read-only="true"/>-->
+    <!--<tx:method name="update*" propagation="REQUIRED"/>-->
+    <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+    <!--&lt;!&ndash; 事务入口 &ndash;&gt;-->
+    <!--<aop:config>-->
+    <!--<aop:pointcut id="allServiceMethod" expression="execution(* your service implements package.*.*(..))" />-->
+    <!--<aop:advisor pointcut-ref="allServiceMethod" advice-ref="txAdvice" />-->
+    <!--</aop:config>-->
+
+
+</beans>
