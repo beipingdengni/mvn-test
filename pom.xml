@@ -31,6 +31,7 @@
         <aspectj.verison>1.9.1</aspectj.verison>
         <servlet.verison>3.1.0</servlet.verison>
         <lombok.verison>1.18.2</lombok.verison>
+        <guava.version>26.0-jre</guava.version>
     </properties>
 
 
@@ -87,6 +88,12 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
