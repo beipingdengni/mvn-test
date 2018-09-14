@@ -74,8 +74,7 @@ AbstractAutowireCapableBeanFactory --> createBean()
 --> 此方法中处理 :
 --> createBeanInstance(beanName, mbd, args) 
     --> instantiateBean() 
-    --> SimpleInstantiationStrategy类 
-    --> instantiate()
+    --> SimpleInstantiationStrategy类 --> instantiate()
 --> populateBean(beanName, mbd, instanceWrapper) --> 处理注解 @AutoWare
 --> exposedObject = initializeBean(beanName, exposedObject, mbd) 
     -->applyBeanPostProcessorsBeforeInitialization()【Aware处理】 
