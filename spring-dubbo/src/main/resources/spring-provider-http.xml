@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <dubbo:application name="tian-provider" owner="tian"/>
+
+    <dubbo:registry protocol="zookeeper" address="zookeeper://127.0.0.1:2181"/>
+
+
+    <!-- 用dubbo协议在20880端口暴露服务 -->
+    <!--<dubbo:protocol name="dubbo" port="20880" />-->
+
+    <dubbo:protocol name="rest" server="tomcat" port="9090" accepts="200" charset="utf8" contextpath="/" threads="200"/>
+
+
+    <!--<dubbo:service protocol="rest" validation="true" timeout="1000" connections="200"-->
+                   <!--interface="com.tian.spring.dubbo.BaseInterface.UserService" ref="userService"/>-->
+
+    <dubbo:service protocol="rest"
+                   validation="true"
+                   timeout="1000"
+                   connections="200"
+                   interface="com.tian.spring.dubbo.http.HttpUserService"
+                   ref="httpUserService"/>
+
+    <bean id="httpUserService" class="com.tian.spring.dubbo.http.HttpUserServiceImpl"/>
+
+    <bean id="userService" class="com.tian.spring.dubbo.provider.UserServiceImpl"/>
+
+    <context:component-scan base-package="com.tian.spring.dubbo.*"/>
+
+    <!--
+     <dubbo:protocol name="rest"
+                    port="3040" threads="100" server="tomcat"
+                    accepts="100"
+                    contextpath="services"
+                    extension="cn.mwee.service.paidui.common.extension.ValidationExceptionMapper"/>
+
+    <dubbo:service interface="cn.mwee.service.paidui.api.ShopRestService" ref="shopRestService"
+                   protocol="rest"
+                   validation="true"
+                   timeout="10000"
+                   connections="100"
+                   filter="metricsFilterB,serviceFilter"/>
+    -->
+
+</beans>

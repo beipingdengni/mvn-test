@@ -19,6 +19,7 @@
         <module>spring-jvm</module>
         <module>spring-jpa</module>
         <module>spring-xsd</module>
+        <module>spring-dubbo</module>
     </modules>
     <packaging>pom</packaging>
 
