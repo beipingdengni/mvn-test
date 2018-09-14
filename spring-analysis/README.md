@@ -53,10 +53,8 @@ public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) t
 
 ```
 
-### Spring 中 代码执行顺序
-```text
-处理 PostProcessorRegistrationDelegate 类中 
-
+### Spring 中 代码执行顺序 ===  处理 PostProcessorRegistrationDelegate 类中 
+```text 
 1、BeanDefinitionRegistryPostProcessor --> postProcessBeanDefinitionRegistry()
 2、BeanFactoryPostProcessor  --> postProcessBeanFactory()
 3、eanPostProcessor  --> postProcessBeforeInitialization() 
@@ -67,9 +65,9 @@ public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) t
 
 ```
 
-### AbstractBeanFactory 中 -> doGetBean() 流程
+### 处理获取bean实例 == AbstractBeanFactory 中 -> doGetBean() 流程
 ```text
-// 处理 获取bean 实例
+ 
 sharedInstance = getSingleton(beanName, () -> createBean(beanName, mbd, args));
 AbstractAutowireCapableBeanFactory --> createBean() 
 --> doCreateBean()【
