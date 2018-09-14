@@ -63,6 +63,7 @@ public class ClientMainTest {
         }
         //删除节点  修改节点的值，-1表示跳过版本检查，其他正数表示如果传入的版本号与当前版本号不一致，则修改不成功，删除是同样的道理
         //zk.delete("/testRoot/children", -1);
+        //zk.setData(path, data.getBytes(), -1)
 
         zooKeeper.register(new Watcher() {
             @Override
