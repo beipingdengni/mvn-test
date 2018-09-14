@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @date 18/9/14下午4:01
  */
 @Slf4j
-public class ClientMainTest {
+public class ClientMainTest implements Watcher {
 
     private static final CountDownLatch connectedSemaphore = new CountDownLatch(1);
 
@@ -25,38 +25,13 @@ public class ClientMainTest {
 
         String connect_addr = "127.0.0.1:2181";
 
-        ZooKeeper zooKeeper = new ZooKeeper(connect_addr, 50000, new Watcher() {
-            @Override
-            public void process(WatchedEvent watchedEvent) {
-
-                log.info(" start  ===> " + watchedEvent.getPath());
-
-                log.info(" evenType ===> " + watchedEvent.getType().name());
-
-                if (watchedEvent.getType() == Event.EventType.NodeCreated) {
-
-                    System.out.println();
-                }
-
-                //获取事件的状态
-                Event.KeeperState keeperState = watchedEvent.getState();
-                Event.EventType eventType = watchedEvent.getType();
-                //如果是建立连接
-                if (Event.KeeperState.SyncConnected == keeperState) {
-                    if (Event.EventType.None == eventType) {
-                        //如果建立连接成功，则发送信号量，让后续阻塞程序向下执行
-                        connectedSemaphore.countDown();
-                        log.info("zk 建立连接");
-                    }
-                }
-
-            }
-        });
+        ZooKeeper zooKeeper = new ZooKeeper(connect_addr, 50000, new ClientMainTest());
 
         connectedSemaphore.await();
         log.info("开始启动");
 
-        Stat exists = zooKeeper.exists("/spring.zookeeper", false);
+
+        Stat exists = zooKeeper.exists("/spring.zookeeper", true);
         if (Objects.isNull(exists)) {
             String s = zooKeeper.create("/spring.zookeeper", "开始".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
             log.info(s);
@@ -66,21 +41,72 @@ public class ClientMainTest {
         //zk.setData(path, data.getBytes(), -1)
         //List<String> list=this.zk.getChildren( path, false );
 
-        zooKeeper.register(new Watcher() {
-            @Override
-            public void process(WatchedEvent watchedEvent) {
 
-                log.info(" register start  ===> " + watchedEvent.getPath());
-
-                log.info(" register evenType ===> " + watchedEvent.getType().name());
-
-            }
-        });
-
-        while (true){
+        while (true) {
             TimeUnit.SECONDS.sleep(10);
         }
 
     }
 
+    @Override
+    public void process(WatchedEvent watchedEvent) {
+
+
+        log.info(" start  ===> " + watchedEvent.getPath());
+
+        log.info(" evenType ===> " + watchedEvent.getType().name());
+
+        String logPrefix = "/";
+
+        String path = watchedEvent.getPath();
+
+        //获取事件的状态
+        Event.KeeperState keeperState = watchedEvent.getState();
+        Event.EventType eventType = watchedEvent.getType();
+
+        connectedSemaphore.countDown();
+
+        //如果是建立连接
+        if (Event.KeeperState.SyncConnected == keeperState) {
+            if (Event.EventType.None == eventType) {
+                //如果建立连接成功，则发送信号量，让后续阻塞程序向下执行
+                log.info("zk 建立连接");
+            }
+        }
+        // 创建节点
+        else if (Event.EventType.NodeCreated == eventType) {
+            System.out.println(logPrefix + "节点创建");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //this.exists(path, true);
+        }
+        // 更新节点
+        else if (Event.EventType.NodeDataChanged == eventType) {
+            System.out.println(logPrefix + "节点数据更新");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(logPrefix + "数据内容: ");
+        }
+        // 更新子节点
+        else if (Event.EventType.NodeChildrenChanged == eventType) {
+            System.out.println(logPrefix + "子节点变更");
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(logPrefix + "子节点列表：");
+        }
+        // 删除节点
+        else if (Event.EventType.NodeDeleted == eventType) {
+            System.out.println(logPrefix + "节点 " + path + " 被删除");
+        }
+
+    }
 }

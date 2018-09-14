@@ -45,23 +45,14 @@ public class MainTest {
         connectedSemaphore.await();
         log.info("开始启动");
 
-        Stat exists = zooKeeper.exists("/spring.zookeeper/test", false);
+
+
+        Stat exists = zooKeeper.exists("/spring.zookeeper/test", true);
         if (Objects.isNull(exists)) {
-            String s = zooKeeper.create("/spring.zookeeper/test", "开始".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+            String s = zooKeeper.create("/spring.zookeeper/test", "开始".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
             log.info(s);
-            String s2 = zooKeeper.create("/spring.zookeeper/test", "开始".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
-            log.info(s2);
+            zooKeeper.delete("/spring.zookeeper/test", -1);
         }
 
-        zooKeeper.register(new Watcher() {
-            @Override
-            public void process(WatchedEvent watchedEvent) {
-
-                log.info(" register start  ===> " + watchedEvent.getPath());
-
-                log.info(" register evenType ===> " + watchedEvent.getType().name());
-
-            }
-        });
     }
 }
