@@ -20,6 +20,7 @@
         <module>spring-jpa</module>
         <module>spring-xsd</module>
         <module>spring-dubbo</module>
+        <module>spring-zookeeper</module>
     </modules>
     <packaging>pom</packaging>
 
