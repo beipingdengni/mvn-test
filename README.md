@@ -55,3 +55,25 @@
 
 ```
 
+#### LocalDateTime LocalDate LocalTime 
+```java
+public class MainTest {
+    public static void main(String[] args) {
+        String strDate="yyyy-mm-dd HH:mm:ss.SSS";
+        DateTimeFormatter dateTimeFormatter=DateTimeFormatter.ofPattern(strDate);
+        // 当前时间
+        LocalDateTime now = LocalDateTime.now();
+        // 正常输出
+        String format = now.format(dateTimeFormatter);
+        System.out.println(format);
+        // 减一天
+        String format1 = now.minusDays(1).format(dateTimeFormatter);
+        // 加一天
+        String format2 = now.plusDays(1).format(dateTimeFormatter);
+        // 加减一天
+        String format3 = now.plus(1,ChronoUnit.DAYS).format(dateTimeFormatter);
+        String format4 = now.minus(1,ChronoUnit.DAYS).format(dateTimeFormatter);
+    }
+}
+```
+
