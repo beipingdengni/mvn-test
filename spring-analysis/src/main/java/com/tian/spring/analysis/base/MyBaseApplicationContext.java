@@ -8,6 +8,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 /**
  * @author tianbeiping
@@ -16,6 +17,7 @@ import org.springframework.context.ApplicationContextAware;
  * @Description:
  * @date 18/9/5下午1:53
  */
+@Component
 public class MyBaseApplicationContext implements ApplicationContextAware, InitializingBean {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -29,12 +31,14 @@ public class MyBaseApplicationContext implements ApplicationContextAware, Initia
     @Autowired
     private MyBaseCommon myBaseCommon;
 
+    @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
 
         logger.info("测试 数据 start  ====>  {}", "setApplicationContext()");
     }
 
+    @Override
     public void afterPropertiesSet() throws Exception {
 
         MyBaseCommon bean = applicationContext.getBean(MyBaseCommon.class);

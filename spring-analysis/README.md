@@ -53,6 +53,34 @@ public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) t
 
 ```
 
+Spring 中 代码执行顺序
+```text
+## 处理 PostProcessorRegistrationDelegate 类中 
+
+1、BeanDefinitionRegistryPostProcessor --> postProcessBeanDefinitionRegistry()
+2、BeanFactoryPostProcessor  --> postProcessBeanFactory()
+3、eanPostProcessor  --> postProcessBeforeInitialization() 
+                    --> AbstractBeanFactory -> doGetBean() 实例化  
+                    --> [执行各种aware接口(ApplicationContextAware、InitializingBean)]
+                    --> postProcessAfterInitialization()
+4、实现接：ApplicationListener<ContextRefreshedEvent>  --> onApplicationEvent()
+
+```
+
+## AbstractBeanFactory 中 -> doGetBean() 流程
+```text
+// 处理 获取bean 实例
+sharedInstance = getSingleton(beanName, () -> createBean(beanName, mbd, args));
+AbstractAutowireCapableBeanFactory --> createBean() 
+--> doCreateBean()【
+--> 此方法中处理 :
+--> createBeanInstance(beanName, mbd, args) --> instantiateBean() --> SimpleInstantiationStrategy类 --> instantiate()
+--> populateBean(beanName, mbd, instanceWrapper) --> 处理注解 @AutoWare
+--> exposedObject = initializeBean(beanName, exposedObject, mbd) -->applyBeanPostProcessorsBeforeInitialization()【Aware处理】 --> invokeInitMethods()【InitializingBean处理】 -->applyBeanPostProcessorsAfterInitialization()
+】
+
+```
+
 
 ##### defaultlistbeanfactory 类结构继承关系 
 ![defaultlistbeanfactory.jpg](img/defaultlistbeanfactory.jpg)
