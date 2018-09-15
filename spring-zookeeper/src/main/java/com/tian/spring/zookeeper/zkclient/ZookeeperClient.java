@@ -1,9 +1,11 @@
 package com.tian.spring.zookeeper.zkclient;
 
 import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author tianbeiping
@@ -25,10 +27,22 @@ public class ZookeeperClient implements Watcher {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        Stat exists = zooKeeper.exists("/spring.zookeeper", true);
+        if (null == exists) {
+            zooKeeper.create("/spring.zookeeper", "zookeeper".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        }
 
-        zooKeeper.exists("/spring.zookeeper/test1", true);
-        zooKeeper.create("/spring.zookeeper/test1", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+        Stat exists1 = zooKeeper.exists("/spring.zookeeper/test1", true);
+        if (exists1 == null) {
+            zooKeeper.create("/spring.zookeeper/test1", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+        }
         zooKeeper.delete("/spring.zookeeper/test1", -1);
+
+//        zooKeeper.delete("/spring.zookeeper", -1);
+
+        while (true) {
+            TimeUnit.SECONDS.sleep(100);
+        }
 
     }
 
@@ -36,9 +50,10 @@ public class ZookeeperClient implements Watcher {
     public void process(WatchedEvent watchedEvent) {
         System.out.println("receive watched event: " + watchedEvent);
         System.out.println("watchedEvent Type : " + watchedEvent.getType());
+        System.out.println("connect path  " + watchedEvent.getPath());
         if (Event.KeeperState.SyncConnected == watchedEvent.getState()) {
             System.out.println("连接到zookeeper");
+            countDownLatch.countDown();
         }
-        countDownLatch.countDown();
     }
 }

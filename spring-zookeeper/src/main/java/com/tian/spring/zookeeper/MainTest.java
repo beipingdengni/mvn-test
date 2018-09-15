@@ -35,7 +35,7 @@ public class MainTest {
                     if (Event.EventType.None == eventType) {
                         //如果建立连接成功，则发送信号量，让后续阻塞程序向下执行
                         connectedSemaphore.countDown();
-                        log.info("zk 建立连接");
+                        log.warn("zk 建立连接");
                     }
                 }
 
@@ -43,14 +43,14 @@ public class MainTest {
         });
 
         connectedSemaphore.await();
-        log.info("开始启动");
+        log.warn("开始启动");
 
 
 
         Stat exists = zooKeeper.exists("/spring.zookeeper/test", true);
         if (Objects.isNull(exists)) {
             String s = zooKeeper.create("/spring.zookeeper/test", "开始".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-            log.info(s);
+            log.warn(s);
             zooKeeper.delete("/spring.zookeeper/test", -1);
         }
 

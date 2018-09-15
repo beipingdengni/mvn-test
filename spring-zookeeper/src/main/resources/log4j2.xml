@@ -30,7 +30,7 @@
 
     <Loggers>
         <!--Root Logger-->
-        <Root level="DEBUG">
+        <Root level="WARN">
             <AppenderRef ref="STDOUT"/>
             <!-- <AppenderRef ref="SERVICE_LOG_FILE"/> -->
         </Root>
