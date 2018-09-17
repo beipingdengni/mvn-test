@@ -1,9 +1,11 @@
 package com.tian.spring.zookeeper.zkclient;
 
 import org.apache.zookeeper.*;
+import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -32,13 +34,19 @@ public class ZookeeperClient implements Watcher {
             zooKeeper.create("/spring.zookeeper", "zookeeper".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
         }
 
-        Stat exists1 = zooKeeper.exists("/spring.zookeeper/test1", true);
+        Stat exists1 = zooKeeper.exists("/spring.zookeeper/ephemeral", true);
         if (exists1 == null) {
-            zooKeeper.create("/spring.zookeeper/test1", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-        }
-        zooKeeper.delete("/spring.zookeeper/test1", -1);
+            String s = zooKeeper.create("/spring.zookeeper/ephemeral", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+            System.out.println(s);
 
-//        zooKeeper.delete("/spring.zookeeper", -1);
+            byte[] data = zooKeeper.getData("/spring.zookeeper/ephemeral", true, new Stat());
+//            System.out.println(" getdata "+new String(data));
+        }
+
+//        zooKeeper.setData("/spring.zookeeper/ephemeral", "测试".getBytes(), -1);
+
+//        zooKeeper.delete("/spring.zookeeper/ephemeral", -1);
+
 
         while (true) {
             TimeUnit.SECONDS.sleep(100);

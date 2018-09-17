@@ -8,6 +8,8 @@ import org.apache.curator.framework.recipes.leader.LeaderSelectorListener;
 import org.apache.curator.framework.recipes.leader.LeaderSelectorListenerAdapter;
 import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.data.Stat;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,27 +34,28 @@ public class CuratorMainTest {
 
         List<String> strings = curatorFramework.getChildren().forPath("/");
 
+
         System.out.println(strings);
 
 
+        Stat stat = curatorFramework.checkExists().forPath("/spring.zookeeper/test");
+        if (stat == null) {
+            String s = curatorFramework.create().creatingParentContainersIfNeeded().withMode(CreateMode.EPHEMERAL).forPath("/spring.zookeeper/test", "name".getBytes());
+        }
+
+
         InterProcessMutex lock = new InterProcessMutex(curatorFramework, "/spring.zookeeper/test");
-        if ( lock.acquire(1, TimeUnit.SECONDS) )
-        {
-            try
-            {
+        if (lock.acquire(1, TimeUnit.SECONDS)) {
+            try {
                 // do some work inside of the critical section here
-            }
-            finally
-            {
+            } finally {
                 lock.release();
             }
         }
 
 
-        LeaderSelectorListener listener = new LeaderSelectorListenerAdapter()
-        {
-            public void takeLeadership(CuratorFramework client) throws Exception
-            {
+        LeaderSelectorListener listener = new LeaderSelectorListenerAdapter() {
+            public void takeLeadership(CuratorFramework client) throws Exception {
                 // this callback will get called when you are the leader
                 // do whatever leader work you need to and only exit
                 // this method when you want to relinquish leadership
