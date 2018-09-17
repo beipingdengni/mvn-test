@@ -20,6 +20,8 @@ public class ZookeeperClient implements Watcher {
 
     private static final String host = "127.0.0.1:2181";
 
+    private static final String zkPath = "/spring.zookeeper";
+
     private static CountDownLatch countDownLatch = new CountDownLatch(1);
 
     public static void main(String[] args) throws IOException, KeeperException, InterruptedException {
@@ -29,24 +31,27 @@ public class ZookeeperClient implements Watcher {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Stat exists = zooKeeper.exists("/spring.zookeeper", true);
-        if (null == exists) {
-            zooKeeper.create("/spring.zookeeper", "zookeeper".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        Stat exists = zooKeeper.exists("/zk_path", false);
+        if (null != exists) {
+            zooKeeper.delete("/zk_path", -1);
+            zooKeeper.create("/zk_path", "开始创建根目录节点".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+            zooKeeper.exists("/zk_path", true);
+            zooKeeper.getChildren("/zk_path", true);
+
+            zooKeeper.setData("/zk_path", "hello world".getBytes(), -1);
         }
 
-        Stat exists1 = zooKeeper.exists("/spring.zookeeper/ephemeral", true);
+        Stat exists1 = zooKeeper.exists("/zk_path/ephemeral", false);
         if (exists1 == null) {
-            String s = zooKeeper.create("/spring.zookeeper/ephemeral", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+            String s = zooKeeper.create("/zk_path/ephemeral", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL_SEQUENTIAL);
+            zooKeeper.exists(s, true);
             System.out.println(s);
 
-            byte[] data = zooKeeper.getData("/spring.zookeeper/ephemeral", true, new Stat());
-//            System.out.println(" getdata "+new String(data));
+            byte[] data = zooKeeper.getData(s, false, new Stat());
+            System.out.println(" getdata " + new String(data));
+
+            zooKeeper.delete(s, -1);
         }
-
-//        zooKeeper.setData("/spring.zookeeper/ephemeral", "测试".getBytes(), -1);
-
-//        zooKeeper.delete("/spring.zookeeper/ephemeral", -1);
-
 
         while (true) {
             TimeUnit.SECONDS.sleep(100);
