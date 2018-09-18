@@ -21,6 +21,7 @@
         <module>spring-xsd</module>
         <module>spring-dubbo</module>
         <module>spring-zookeeper</module>
+        <module>spring-thrift</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -17,42 +17,9 @@ import java.util.concurrent.CountDownLatch;
  */
 @Slf4j
 public class MainTest {
-    private static final CountDownLatch connectedSemaphore = new CountDownLatch(1);
 
-    public static void main(String[] args) throws IOException, KeeperException, InterruptedException {
+    public static void main(String[] args) throws Exception {
 
-        String connect_addr = "127.0.0.1:2181";
-
-        ZooKeeper zooKeeper = new ZooKeeper(connect_addr, 50000, new Watcher() {
-            @Override
-            public void process(WatchedEvent watchedEvent) {
-
-                //获取事件的状态
-                Event.KeeperState keeperState = watchedEvent.getState();
-                Event.EventType eventType = watchedEvent.getType();
-                //如果是建立连接
-                if (Event.KeeperState.SyncConnected == keeperState) {
-                    if (Event.EventType.None == eventType) {
-                        //如果建立连接成功，则发送信号量，让后续阻塞程序向下执行
-                        connectedSemaphore.countDown();
-                        log.warn("zk 建立连接");
-                    }
-                }
-
-            }
-        });
-
-        connectedSemaphore.await();
-        log.warn("开始启动");
-
-
-
-        Stat exists = zooKeeper.exists("/spring.zookeeper/test", true);
-        if (Objects.isNull(exists)) {
-            String s = zooKeeper.create("/spring.zookeeper/test", "开始".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-            log.warn(s);
-            zooKeeper.delete("/spring.zookeeper/test", -1);
-        }
 
     }
 }
