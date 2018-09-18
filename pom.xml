@@ -22,6 +22,7 @@
         <module>spring-dubbo</module>
         <module>spring-zookeeper</module>
         <module>spring-thrift</module>
+        <module>spring-spi</module>
     </modules>
     <packaging>pom</packaging>
 
