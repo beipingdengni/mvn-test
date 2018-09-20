@@ -4,6 +4,7 @@ import com.tian.spring.spi.simple.Search;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.ServiceLoader;
 
 /**
@@ -29,6 +30,7 @@ public class MainTest {
             Search next = iterator.next();
             String result = next.getName("开始");
             log.info(result);
+            log.info(Objects.hashCode(result)+"");
         }
 
         log.info("开心的笑===》");
