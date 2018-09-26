@@ -11,8 +11,8 @@ public class MainTest {
 
     public static void main(String[] args) {
 
-        String codeMd5 = EnCryptionUtil.getHexMD5("hello 时间");
-        System.out.println(codeMd5);
+//        String codeMd5 = EnCryptionUtil.getHexMD5("hello 时间");
+//        System.out.println(codeMd5);
 //        String codeBaseMd5 = EnCryptionUtil.getBase64MD5("hello 时间");
 //        System.out.println(codeBaseMd5);
 //
@@ -26,27 +26,19 @@ public class MainTest {
 //        String codeBaseMd52 = EnCryptionUtil.getBase64SHA256("hello 时间");
 //        System.out.println(codeBaseMd52);
 
-        char[] HEX_DIGITS = "0123456789ABCDEF".toCharArray();
 
-        StringBuilder ret = new StringBuilder();
+        String key = "~20@awx,/)&eox";
+        String content = "加密的world1111";
+        String s = EnCryptionUtil.AESEncode(key, content);
+        System.out.println("s ==> " + s);
+        String s1 = EnCryptionUtil.AESDecode(key, s);
+        System.out.println("s1 ==> " + s1);
 
-        byte bt = -13;
-//        ret.append(HEX_DIGITS[(bt>>4) & 0xFF]);
-//        ret.append(HEX_DIGITS[bt & 0xFF]);
-//
-//        System.out.println(ret.toString());
-//        bt=-13;
-        System.out.println(HEX_DIGITS[(-bt >> 4) & 0x0F]);
-        System.out.println(HEX_DIGITS[-bt & 0x0F]);
 
-        System.out.println(-13 & 0xFF);
-        System.out.println((-13 >> 4) & 0xFF);
-
-        System.out.println(1 << 4);
-        System.out.println(Integer.toBinaryString(100));
-
-        System.out.println(Math.pow(2, 4) + Math.pow(2, 3) + 1);
-        System.out.println(100 >> 2);
+        String sq = EnCryptionUtil.DESencrypt(content, key);
+        System.out.println("sq ==> " + sq);
+        String sw = EnCryptionUtil.DESdecrypt(sq, key);
+        System.out.println("sw ==> " + sw);
 
 
     }
