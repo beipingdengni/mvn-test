@@ -1,5 +1,18 @@
 package com.tian.spring.common.cryption;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.crypto.cipher.CryptoCipher;
+import org.apache.commons.crypto.cipher.CryptoCipherFactory;
+import org.apache.commons.crypto.utils.Utils;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Properties;
+
 /**
  * @author tianbeiping
  * @Title: MainTest
@@ -9,7 +22,7 @@ package com.tian.spring.common.cryption;
  */
 public class MainTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
 
 //        String codeMd5 = EnCryptionUtil.getHexMD5("hello 时间");
 //        System.out.println(codeMd5);
@@ -26,20 +39,25 @@ public class MainTest {
 //        String codeBaseMd52 = EnCryptionUtil.getBase64SHA256("hello 时间");
 //        System.out.println(codeBaseMd52);
 
+//        String key = "~20@awx,/)&eox";
+//        String content = "加密的world1111";
+//        String s = EnCryptionUtil.AESEncode(key, content);
+//        System.out.println("s ==> " + s);
+//        String s1 = EnCryptionUtil.AESDecode(key, s);
+//        System.out.println("s1 ==> " + s1);
+//
+//
+//        String sq = EnCryptionUtil.DESencrypt(content, key);
+//        System.out.println("sq ==> " + sq);
+//        String sw = EnCryptionUtil.DESdecrypt(sq, key);
+//        System.out.println("sw ==> " + sw);
 
-        String key = "~20@awx,/)&eox";
-        String content = "加密的world1111";
-        String s = EnCryptionUtil.AESEncode(key, content);
-        System.out.println("s ==> " + s);
-        String s1 = EnCryptionUtil.AESDecode(key, s);
-        System.out.println("s1 ==> " + s1);
 
+        byte[] bytes = DigestUtils.md5("cehisasdhiasd ");
+        System.out.println(Base64.encodeBase64String(bytes));
 
-        String sq = EnCryptionUtil.DESencrypt(content, key);
-        System.out.println("sq ==> " + sq);
-        String sw = EnCryptionUtil.DESdecrypt(sq, key);
-        System.out.println("sw ==> " + sw);
 
 
     }
+
 }
