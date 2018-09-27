@@ -2,7 +2,7 @@
 
 ## JackJson 具体配置描述
 
-```txt
+```text
 //这个特性，决定了解析器是否将自动关闭那些不属于parser自己的输入源。
 // 如果禁止，则调用应用不得不分别去关闭那些被用来创建parser的基础输入流InputStream和reader；
 //默认是true
