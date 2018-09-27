@@ -1,7 +1,10 @@
 package com.tian.spring.netty;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -22,7 +25,7 @@ public class NettyClient {
     /// 通过nio方式来接收连接和处理连接
     private static EventLoopGroup group = new NioEventLoopGroup();
     private static Bootstrap b = new Bootstrap();
-    private static Channel ch;
+    private static ChannelFuture ch;
 
     /**
      * Netty创建全部都是实现自AbstractBootstrap。
@@ -34,14 +37,19 @@ public class NettyClient {
         b.channel(NioSocketChannel.class);
         b.handler(new NettyClientFilter());
         // 连接服务端
-        ch = b.connect(host, port).sync().channel();
+        ch = b.connect(host, port).sync();
         star();
+        ch.channel().writeAndFlush(Unpooled.copiedBuffer("777".getBytes()));
+//        ch.addListener(ChannelFutureListener.CLOSE).sync().channel();
+        ch.channel().closeFuture().sync();
+        group.shutdownGracefully();
+
     }
 
-    public static void star() throws IOException{
-        String str="Hello Netty";
-        ch.writeAndFlush(str+ "\r\n");
-        System.out.println("客户端发送数据:"+str);
+    public static void star() throws IOException {
+        String str = "Hello Netty";
+        ch.channel().writeAndFlush(str + "\r\n");
+        System.out.println("客户端发送数据:" + str);
     }
 
 
