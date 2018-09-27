@@ -5,7 +5,10 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.epoll.EpollEventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
+import java.util.Objects;
 
 /**
  * @author tianbeiping
@@ -18,25 +21,31 @@ public class NettyServer {
 
     private EventLoopGroup bossEvenLoopGroup = null;
     private EventLoopGroup workEvenLoopGroup = null;
+    private int port = 33440;
 
     public NettyServer() throws InterruptedException {
         init();
     }
 
+    public NettyServer(Integer port) throws InterruptedException {
+        this.port = port;
+        init();
+    }
+
 
     private void init() throws InterruptedException {
-        bossEvenLoopGroup = new EpollEventLoopGroup();
-        workEvenLoopGroup = new EpollEventLoopGroup();
+        bossEvenLoopGroup = new NioEventLoopGroup();
+        workEvenLoopGroup = new NioEventLoopGroup();
         ServerBootstrap bootstrap = new ServerBootstrap();
         bootstrap.group(bossEvenLoopGroup, workEvenLoopGroup)
-                .channel(NioServerSocketChannel.class)
-                .childHandler(new NettyServerFilter())
+                .option(ChannelOption.SO_BACKLOG, 2 * 1024)
                 .option(ChannelOption.SO_RCVBUF, 2 * 1024)
                 .option(ChannelOption.SO_SNDBUF, 2 * 1024)
-                .option(ChannelOption.SO_KEEPALIVE, true);
-//                .option(ChannelOption.SO_BACKLOG,128)
+                .option(ChannelOption.SO_KEEPALIVE, true)
+                .channel(NioServerSocketChannel.class)
+                .childHandler(new NettyServerFilter());
 
-        ChannelFuture sync = bootstrap.bind().sync();
+        ChannelFuture sync = bootstrap.bind(this.port).sync();
         // 关闭
         sync.channel().closeFuture().sync();
     }
@@ -48,5 +57,14 @@ public class NettyServer {
         if (workEvenLoopGroup != null) {
             workEvenLoopGroup.shutdownGracefully();
         }
+    }
+
+
+    public static void main(String[] args) throws InterruptedException {
+
+        NettyServer nettyServer = new NettyServer();
+        nettyServer.release();
+
+
     }
 }

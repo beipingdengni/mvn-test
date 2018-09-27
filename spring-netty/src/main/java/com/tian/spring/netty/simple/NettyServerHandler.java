@@ -3,7 +3,10 @@ package com.tian.spring.netty.simple;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+import javax.swing.text.DateFormatter;
 import java.net.InetAddress;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -26,8 +29,13 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
             ctx.close();
         }
         Date date = new Date();
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         // 返回客户端消息
-        ctx.writeAndFlush(date + "\n");
+        ctx.writeAndFlush("当前时间：" + formatter.format(localDateTime) + "\n");
     }
 
     /**
