@@ -1,5 +1,6 @@
-package com.tian.spring.netty;
+package com.tian.spring.netty.simple;
 
+import com.tian.spring.netty.NettyServerHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

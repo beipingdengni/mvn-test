@@ -1,4 +1,4 @@
-package com.tian.spring.netty;
+package com.tian.spring.netty.simple;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
