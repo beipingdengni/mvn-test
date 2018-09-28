@@ -1,17 +1,18 @@
 package com.tian.spring.common.cryption;
 
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.*;
 import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.*;
+import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
 
 /**
  * @author tianbeiping
@@ -29,6 +30,8 @@ public class EnCryptionUtil {
     private static final String DIGEST_SHA_521 = "SHA-521";
     private static final String DIGEST_AES = "AES";
     private static final String DIGEST_AES_PADING = "AES/ECB/PKCS5Padding";  //默认的加密算法
+
+    private static final Base64 base64 = new Base64();
 
 
     public static String getBase64MD5(String msg) {
@@ -94,8 +97,8 @@ public class EnCryptionUtil {
             //9.根据密码器的初始化方式--加密：将数据加密
             byte[] byte_AES = cipher.doFinal(bytes);
             //10.将加密后的数据转换为字符串
-            String AES_encode = new BASE64Encoder().encode(byte_AES);
-            return AES_encode;
+            byte[] encode = base64.encode(byte_AES);
+            return new String(encode);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException | UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (InvalidKeySpecException e) {
@@ -114,9 +117,9 @@ public class EnCryptionUtil {
             //7.初始化密码器，第一个参数为加密(Encrypt_mode)或者解密解密(Decrypt_mode)操作，第二个参数为使用的KEY
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             //8.将加密并编码后的内容解码成字节数组
-            byte[] byte_content = new BASE64Decoder().decodeBuffer(msg);
+            byte[] decode = base64.decode(msg);
             //9.根据密码器的初始化方式--加密：将数据加密
-            byte[] byte_AES = cipher.doFinal(byte_content);
+            byte[] byte_AES = cipher.doFinal(decode);
             //10.将加密后的数据转换为字符串
             return new String(byte_AES, "utf-8");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | BadPaddingException | IOException | IllegalBlockSizeException e) {
@@ -165,7 +168,8 @@ public class EnCryptionUtil {
             //按单部分操作加密或解密数据，或者结束一个多部分操作
             byte[] bytes = datasource.getBytes("utf-8");
             byte[] bytes_DES = cipher.doFinal(bytes);
-            return new BASE64Encoder().encode(bytes_DES);
+            byte[] encode = base64.encode(bytes_DES);
+            return new String(encode);
         } catch (Throwable e) {
             e.printStackTrace();
         }
@@ -189,7 +193,7 @@ public class EnCryptionUtil {
             Cipher cipher = Cipher.getInstance("DES");
             // 用密匙初始化Cipher对象
             cipher.init(Cipher.DECRYPT_MODE, securekey, random);
-            byte[] bytes = new BASE64Decoder().decodeBuffer(content);
+            byte[] bytes = base64.decode(content);
             // 真正开始解密操作
             byte[] bytes1 = cipher.doFinal(bytes);
             return new String(bytes1, "utf-8");
@@ -202,7 +206,8 @@ public class EnCryptionUtil {
 
     private static String toBase64(byte[] bytes) {
         try {
-            return new String(Base64.getEncoder().encode(bytes), "UTF-8");
+            byte[] encode = base64.encode(bytes);
+            return new String(encode, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
