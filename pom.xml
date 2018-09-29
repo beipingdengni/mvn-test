@@ -24,6 +24,7 @@
         <module>spring-thrift</module>
         <module>spring-spi</module>
         <module>spring-common</module>
+        <module>spring-resteasy</module>
     </modules>
     <packaging>pom</packaging>
 
