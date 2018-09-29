@@ -23,7 +23,8 @@
         </plugins>
     </build>
     <properties>
-        <resteasy.verison>3.6.1.Final</resteasy.verison>
+        <!--<resteasy.verison>3.6.1.Final</resteasy.verison>-->
+        <resteasy.verison>3.0.19.Final</resteasy.verison>
         <resteasy-api.verison>3.0.12.Final</resteasy-api.verison>
         <tomcat.embed.verion>8.5.5</tomcat.embed.verion>
     </properties>
@@ -50,16 +51,16 @@
             <version>${resteasy.verison}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.jboss.resteasy</groupId>-->
-            <!--<artifactId>resteasy-servlet-initializer</artifactId>-->
-            <!--<version>${resteasy.verison}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-spring</artifactId>
+            <artifactId>resteasy-servlet-initializer</artifactId>
             <version>${resteasy.verison}</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.resteasy</groupId>-->
+            <!--<artifactId>resteasy-spring</artifactId>-->
+            <!--<version>${resteasy.verison}</version>-->
+        <!--</dependency>-->
 
 
         <dependency>
@@ -78,7 +79,6 @@
             <artifactId>tomcat-embed-el</artifactId>
             <version>${tomcat.embed.verion}</version>
         </dependency>
-
     </dependencies>
 
 </project>

@@ -14,10 +14,6 @@ import java.util.Map;
  */
 public interface PersonMapper {
 
-<<<<<<< HEAD
-    List<Map<String,Object>> selectPersonList(List<String> ls);
-=======
     List<Map<String,Object>> selectPersonList(Map<String,Object> map);
->>>>>>> b9d5c00dcef6658ea9b9c38d8e9afee34f16603c
 
 }

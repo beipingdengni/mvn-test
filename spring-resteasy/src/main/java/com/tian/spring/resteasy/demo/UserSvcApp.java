@@ -1,6 +1,4 @@
-package com.tian.spring.resteasy;
-
-import com.tian.spring.resteasy.impl.UserServiceImpl;
+package com.tian.spring.resteasy.demo;
 
 import javax.ws.rs.core.Application;
 import javax.ws.rs.ext.Provider;
@@ -23,6 +21,7 @@ public class UserSvcApp extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         HashSet<Class<?>> set = new HashSet<Class<?>>();
+        set.add(UserSvc.class);
         return set;
     }
 

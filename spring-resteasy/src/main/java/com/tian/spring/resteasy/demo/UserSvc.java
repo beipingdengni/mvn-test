@@ -1,4 +1,4 @@
-package com.tian.spring.resteasy;
+package com.tian.spring.resteasy.demo;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

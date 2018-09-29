@@ -10,7 +10,7 @@ import lombok.Data;
  * @date 18/9/29上午10:52
  */
 
-@Data
+
 public class TomcatConfig {
 
     private int port;

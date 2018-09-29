@@ -1,6 +1,18 @@
 package com.tian.spring.resteasy;
 
+import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleException;
+import org.apache.catalina.core.AprLifecycleListener;
+import org.apache.catalina.core.StandardServer;
+import org.apache.catalina.startup.Tomcat;
+import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import javax.servlet.ServletException;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author tianbeiping
@@ -33,9 +45,9 @@ public class MainTest {
 
         String property = System.getProperty("java.io.tmpdir");
         System.out.println(property);
-
-
-        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("spring-resteasy.xml");
+//
+//
+//        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("spring-resteasy.xml");
 
     }
 }
