@@ -25,7 +25,7 @@ public interface UserService {
     @GET
     @Path("/all")
     @Produces(MEDIA_TYPE_JSON_UTF8)
-    List<UserVo> all();
+    List<UserVo> all() throws Exception;
 
     @POST
     @Path("/add")

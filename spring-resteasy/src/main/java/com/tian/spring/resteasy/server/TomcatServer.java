@@ -1,22 +1,15 @@
 package com.tian.spring.resteasy.server;
 
-import com.alibaba.dubbo.remoting.http.servlet.DispatcherServlet;
 import org.apache.catalina.Context;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.Wrapper;
 import org.apache.catalina.connector.Connector;
-import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.coyote.http11.Http11NioProtocol;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
-import org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Enumeration;
 
 /**
@@ -36,8 +29,8 @@ public class TomcatServer {
 
         Tomcat tomcat = new Tomcat();
         try {
-            //Path tempPath = Files.createTempDirectory("tomcat");
-            String tempPath = System.getProperty("java.io.tmpdir");
+            String tempPath = Files.createTempDirectory("tomcat").toString();
+//            String tempPath = System.getProperty("java.io.tmpdir");
             tomcat.setBaseDir(tempPath);
             tomcat.setPort(9090);
 
@@ -61,25 +54,19 @@ public class TomcatServer {
              */
             Context context = tomcat.addContext("", tempPath);
 
+            ServletContext servletContext = context.getServletContext();
+            servletContext.setAttribute(ResteasyDeployment.class.getName(), deployment);
+            dispatcher.init(new SimpleServletConfig(servletContext));
+
             context.addLifecycleListener(new Tomcat.FixContextListener());
-//            context.addParameter("resteasy.resources", "com.tian.spring.resteasy.service.UserService");
-            context.addParameter("resteasy.resources", "com.tian.spring.resteasy.impl.UserServiceImpl");
-//            context.addParameter("javax.ws.rs.core.Application", "com.tian.spring.resteasy.config.RestConfig");
+//            context.addParameter("resteasy.resources", "com.tian.spring.resteasy.impl.UserServiceImpl");
+//            context.addParameter("resteasy.providers", "com.tian.spring.resteasy.excaption.NotFoundException");
             context.addApplicationListener("org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap");
             // resteasy和spring整合，有了这个，ContextLoaderListener就不要了
 //            context.addApplicationListener("org.jboss.resteasy.plugins.spring.SpringContextLoaderListener");
 
-            ServletContext servletContext = context.getServletContext();
-
-            servletContext.setAttribute(ResteasyDeployment.class.getName(), deployment);
-
-
-            /**
-             * servlet
-             */
-            dispatcher.init(new SimpleServletConfig(servletContext));
-            Tomcat.addServlet(context, "DefaultDispatcher", dispatcher);
-            context.addServletMappingDecoded("/*", "DefaultDispatcher");
+            Tomcat.addServlet(context, "DispatcherServlet", dispatcher);
+            context.addServletMappingDecoded("/*", "DispatcherServlet");
 
 
             tomcat.start();
@@ -92,7 +79,7 @@ public class TomcatServer {
     }
 
 
-    public static class SimpleServletConfig implements ServletConfig {
+    private static class SimpleServletConfig implements ServletConfig {
 
         private final ServletContext servletContext;
 

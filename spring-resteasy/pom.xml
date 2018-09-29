@@ -53,13 +53,19 @@
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-servlet-initializer</artifactId>
+            <artifactId>resteasy-client</artifactId>
             <version>${resteasy.verison}</version>
         </dependency>
+
         <!--<dependency>-->
-            <!--<groupId>org.jboss.resteasy</groupId>-->
-            <!--<artifactId>resteasy-spring</artifactId>-->
-            <!--<version>${resteasy.verison}</version>-->
+        <!--<groupId>org.jboss.resteasy</groupId>-->
+        <!--<artifactId>resteasy-servlet-initializer</artifactId>-->
+        <!--<version>${resteasy.verison}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>org.jboss.resteasy</groupId>-->
+        <!--<artifactId>resteasy-spring</artifactId>-->
+        <!--<version>${resteasy.verison}</version>-->
         <!--</dependency>-->
 
 

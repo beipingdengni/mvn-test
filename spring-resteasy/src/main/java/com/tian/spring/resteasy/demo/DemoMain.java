@@ -38,11 +38,11 @@ public class DemoMain {
         Tomcat tomcat = new Tomcat();
         try {
 //            String tempPath = System.getProperty("java.io.tmpdir");
-            String tempPath= Files.createTempDirectory("webapp").toString();
+            String tempPath = Files.createTempDirectory("webapp").toString();
 
             System.out.println(tempPath);
             tomcat.setBaseDir(tempPath);
-            tomcat.setPort(9999);
+            tomcat.setPort(8081);
             Connector connector = tomcat.getConnector();
             Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
             //设置最大连接数
@@ -56,17 +56,12 @@ public class DemoMain {
              */
             Context context = tomcat.addContext("", tempPath);
 
-//            context.addParameter("resteasy.scan", "true");
-//            context.addParameter("resteasy.servlet.mapping.prefix", "");
-            context.addParameter("resteasy.resources", "com.tian.spring.resteasy.UserSvc");
-//            context.addParameter("javax.ws.rs.core.Application", "com.tian.spring.resteasy.UserSvcApp");
+            context.addParameter("resteasy.resources", "com.tian.spring.resteasy.demo.UserSvcImpl");
             context.addApplicationListener("org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap");
 
-            ServletContext servletContext = context.getServletContext();
-            servletContext.setAttribute(ResteasyDeployment.class.getName(), deployment);
-
-
-            dispatcher.init(new TomcatServer.SimpleServletConfig(servletContext));
+//            ServletContext servletContext = context.getServletContext();
+//            servletContext.setAttribute(ResteasyDeployment.class.getName(), deployment);
+//            dispatcher.init(new TomcatServer.SimpleServletConfig(servletContext));
 
             Tomcat.addServlet(context, "DefaultDispatcher", dispatcher);
             context.addServletMappingDecoded("/", "DefaultDispatcher");

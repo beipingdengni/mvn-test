@@ -1,6 +1,8 @@
 package com.tian.spring.resteasy.vo;
 
 
+import lombok.Data;
+
 /**
  * @author tianbeiping
  * @Title: UserVo
@@ -9,23 +11,9 @@ package com.tian.spring.resteasy.vo;
  * @date 18/9/29上午10:25
  */
 
+@Data
 public class UserVo {
     private String id;
     private String name;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

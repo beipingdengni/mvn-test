@@ -23,17 +23,22 @@ public class UserServiceImpl implements UserService {
 
 
     public UserVo get(String id) {
-        return list.stream().filter(e -> e.getId().equals(id)).findFirst().orElse(new UserVo());
-    }
-
-    @Path("user/all")
-    @GET
-    public List<UserVo> all() {
         UserVo userVo = new UserVo();
         userVo.setId("1");
         userVo.setName("田");
-        list.add(userVo);
-        return list;
+
+        return userVo;//list.stream().filter(e -> e.getId().equals(id)).findFirst().orElse(new UserVo());
+    }
+
+    public List<UserVo> all() throws Exception {
+        List<UserVo> ls = Lists.newArrayList();
+        UserVo userVo = new UserVo();
+        userVo.setId("1");
+        userVo.setName("田");
+        ls.add(userVo);
+
+        throw  new Exception("测试错误");
+//        return ls;
     }
 
     public UserVo add(UserVo user) {

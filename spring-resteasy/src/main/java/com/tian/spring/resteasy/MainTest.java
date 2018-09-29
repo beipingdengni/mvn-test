@@ -1,18 +1,6 @@
 package com.tian.spring.resteasy;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.LifecycleException;
-import org.apache.catalina.core.AprLifecycleListener;
-import org.apache.catalina.core.StandardServer;
-import org.apache.catalina.startup.Tomcat;
-import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import javax.servlet.ServletException;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * @author tianbeiping
@@ -23,31 +11,13 @@ import java.nio.file.Path;
  */
 public class MainTest {
 
-    /*
-       * LogonRequest lr = new LogonRequest();
-         lr.setPrincipal("admin");
-         lr.setPassword("123456");
-         lr.setPrincipalType(PrincipalType.UniqueName);
-         ResteasyClient _restClient =  (new ResteasyClientBuilder()).build();
-        ResteasyWebTarget target = _restClient.target("http://127.0.0.1:9080/logon");
-        Builder post = target.request().header("Content-Type", "application/json;charset=utf-8");
-        post.accept(MediaType.APPLICATION_JSON);
-        post.acceptEncoding("UTF-8");
-        Response response =  post.post(Entity.entity(lr, MediaType.APPLICATION_JSON));
-        LogonResponse logon = response.readEntity(LogonResponse.class);
 
-        best demo 使用 ：resteasy demo;
-        https://blog.csdn.net/u011411069/article/details/77119918
-
-       * */
 
     public static void main(String[] args) {
 
         String property = System.getProperty("java.io.tmpdir");
         System.out.println(property);
-//
-//
-//        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("spring-resteasy.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-resteasy.xml");
 
     }
 }

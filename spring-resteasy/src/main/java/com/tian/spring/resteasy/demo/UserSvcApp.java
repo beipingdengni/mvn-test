@@ -21,14 +21,14 @@ public class UserSvcApp extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         HashSet<Class<?>> set = new HashSet<Class<?>>();
-        set.add(UserSvc.class);
+        set.add(UserSvcImpl.class);
         return set;
     }
 
     @Override
     public Set<Object> getSingletons() {
 
-        singletons.add(new UserSvc());
+        singletons.add(new UserSvcImpl());
 
         return singletons;
     }
