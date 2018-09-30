@@ -1,18 +1,15 @@
 package com.tiam.spring.undertow;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 import com.tiam.spring.undertow.service.UserServicesImpl;
 import io.undertow.Undertow;
-import io.undertow.server.HttpHandler;
-import io.undertow.server.HttpServerExchange;
 import io.undertow.servlet.api.DeploymentInfo;
-import io.undertow.util.Headers;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
-import org.jboss.resteasy.test.TestPortProvider;
+import org.jboss.resteasy.spi.ResteasyDeployment;
 
 import javax.ws.rs.core.Application;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,7 +31,7 @@ public class UndertowMainTest extends Application {
         /**
          * 方式一 部署
          */
-        server.deploy(UndertowMainTest.class, "/");
+//        server.deploy(UndertowMainTest.class, "/");
 
         /**
          * 方式二 部署
@@ -43,6 +40,21 @@ public class UndertowMainTest extends Application {
 //        di.setContextPath("");
 //        di.setDeploymentName("DI");
 //        server.deploy(di);
+
+        /**
+         * 方式三 部署  not application
+         */
+        ResteasyDeployment deployment = new ResteasyDeployment();
+        List<Class> resourceClass = Lists.newArrayList();
+        resourceClass.add(UserServicesImpl.class);
+        deployment.setActualResourceClasses(resourceClass);
+
+        DeploymentInfo di = server.undertowDeployment(deployment);
+        di.setClassLoader(UndertowMainTest.class.getClassLoader());
+        di.setContextPath("/");
+        di.setDeploymentName("Resteasy/");
+
+        server.deploy(di);
 
     }
 
