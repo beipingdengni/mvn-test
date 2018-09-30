@@ -18,6 +18,6 @@ public class NotFoundException implements ExceptionMapper<Exception> {
 
         System.out.println("  " + e.getMessage());
 
-        return Response.ok("Exception" + e.getMessage(), MediaType.APPLICATION_JSON_TYPE).status(Response.Status.OK).build();
+        return Response.ok("Exception" + e.getMessage(), MediaType.APPLICATION_JSON_TYPE).status(Response.Status.NOT_FOUND).build();
     }
 }

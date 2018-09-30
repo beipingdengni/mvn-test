@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService {
         userVo.setName("田");
         ls.add(userVo);
 
-        throw  new Exception("测试错误");
-//        return ls;
+//        throw  new Exception("测试错误");
+        return ls;
     }
 
     public UserVo add(UserVo user) {

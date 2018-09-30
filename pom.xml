@@ -26,6 +26,7 @@
         <module>spring-common</module>
         <module>spring-resteasy</module>
         <module>spring-undertow</module>
+        <module>spring-ribbon-feign</module>
     </modules>
     <packaging>pom</packaging>
 
