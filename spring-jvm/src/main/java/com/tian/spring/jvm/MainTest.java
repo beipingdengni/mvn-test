@@ -24,20 +24,28 @@ public class MainTest {
      */
     public static void main(String[] args) throws InterruptedException {
 
-        List<PersonVo> list = Lists.newArrayList();
-
-        int i = 0;
-        while (i < Integer.MAX_VALUE) {
-            i++;
-            PersonVo vo = new PersonVo();
-            vo.setAge(18);
-            vo.setName("tian");
-            vo.setSex(0);
-            list.add(vo);
-//            TimeUnit.MICROSECONDS.sleep(10);
-        }
-        System.out.println(list);
+//        List<PersonVo> list = Lists.newArrayList();
+//
+//        int i = 0;
+//        while (i < Integer.MAX_VALUE) {
+//            i++;
+//            PersonVo vo = new PersonVo();
+//            vo.setAge(18);
+//            vo.setName("tian");
+//            vo.setSex(0);
+//            list.add(vo);
+//        }
+//        System.out.println(list);
+        long l = -1l ^ (-1L << 12L);
+        long l1 = ((System.currentTimeMillis() - 1538211907857L) << 22) | (1 << 17) | (1 << 12) | 1538211907857L;
+        System.out.println(Long.toBinaryString(376121132716038L >> 22).length());
+        System.out.println(376121132716038L >> 22);
+        System.out.println(Long.toBinaryString(376121132716038L));
+        System.out.println(Long.toBinaryString(-1l << 22));
+        System.out.println(Long.toBinaryString(376121132716038L >> 12 & ~(-1L << 4)));
+        System.out.println(Long.toBinaryString(376121132716038L >> 17 & ~(-1L << 4)));
+        System.out.println(Long.toBinaryString(376121132716038L >> 22 & ~(-1L << 4)));
+        System.out.println(376121132716038L >> 22 & ~(-1L << 4));
 
     }
-
 }
