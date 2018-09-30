@@ -25,6 +25,7 @@
         <module>spring-spi</module>
         <module>spring-common</module>
         <module>spring-resteasy</module>
+        <module>spring-undertow</module>
     </modules>
     <packaging>pom</packaging>
 

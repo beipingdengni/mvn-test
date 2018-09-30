@@ -1,8 +1,9 @@
-package com.tian.spring.resteasy.excaption;
+package com.tiam.spring.undertow.excaption;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
  * @author tianbeiping
@@ -11,6 +12,7 @@ import javax.ws.rs.ext.ExceptionMapper;
  * @Description:
  * @date 18/9/29下午6:34
  */
+@Provider
 public class NotFoundException implements ExceptionMapper<Exception> {
 
     @Override
