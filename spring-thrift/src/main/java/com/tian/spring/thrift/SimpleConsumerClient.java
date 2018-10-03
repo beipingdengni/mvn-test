@@ -16,14 +16,15 @@ import org.apache.thrift.transport.TTransportException;
  * @Description:
  * @date 18/9/18下午4:07
  */
-public class ConsumerMainTest {
+public class SimpleConsumerClient {
     public static void main(String[] args) {
         System.out.println("客户端启动....");
         TTransport transport = null;
         try {
-            transport = new TSocket("localhost", 50005);
+            transport = new TSocket("localhost", 50005, 5000);
             TProtocol protocol = new TBinaryProtocol(transport);
             BaseService.Client client = new BaseService.Client(protocol);
+            // 连接
             transport.open();
 
             PersonVo result = client.dealPerson("liyao", "nan", 18);

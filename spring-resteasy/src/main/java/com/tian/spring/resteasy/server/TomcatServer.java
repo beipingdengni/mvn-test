@@ -54,19 +54,20 @@ public class TomcatServer {
              */
             Context context = tomcat.addContext("", tempPath);
 
-            ServletContext servletContext = context.getServletContext();
-            servletContext.setAttribute(ResteasyDeployment.class.getName(), deployment);
-            dispatcher.init(new SimpleServletConfig(servletContext));
+//            ServletContext servletContext = context.getServletContext();
+//            servletContext.setAttribute(ResteasyDeployment.class.getName(), deployment);
+//            dispatcher.init(new SimpleServletConfig(servletContext));
 
             context.addLifecycleListener(new Tomcat.FixContextListener());
-//            context.addParameter("resteasy.resources", "com.tian.spring.resteasy.impl.UserServiceImpl");
+            context.addParameter("resteasy.resources", "com.tian.spring.resteasy.impl.UserServiceImpl");
 //            context.addParameter("resteasy.providers", "com.tian.spring.resteasy.excaption.NotFoundException");
             context.addApplicationListener("org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap");
-            // resteasy和spring整合，有了这个，ContextLoaderListener就不要了
-//            context.addApplicationListener("org.jboss.resteasy.plugins.spring.SpringContextLoaderListener");
+            //resteasy和spring整合，有了这个，ContextLoaderListener就不要了
+            //context.addApplicationListener("org.jboss.resteasy.plugins.spring.SpringContextLoaderListener");
 
             Tomcat.addServlet(context, "DispatcherServlet", dispatcher);
             context.addServletMappingDecoded("/*", "DispatcherServlet");
+
 
 
             tomcat.start();
