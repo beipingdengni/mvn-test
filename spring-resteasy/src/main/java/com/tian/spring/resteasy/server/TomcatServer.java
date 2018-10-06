@@ -1,8 +1,10 @@
 package com.tian.spring.resteasy.server;
 
+import com.google.common.collect.Lists;
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
+import org.apache.catalina.util.ServerInfo;
 import org.apache.coyote.http11.Http11NioProtocol;
 import org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher;
 import org.jboss.resteasy.spi.ResteasyDeployment;
@@ -54,6 +56,7 @@ public class TomcatServer {
              */
             Context context = tomcat.addContext("", tempPath);
 
+<<<<<<< HEAD
 //            ServletContext servletContext = context.getServletContext();
 //            servletContext.setAttribute(ResteasyDeployment.class.getName(), deployment);
 //            dispatcher.init(new SimpleServletConfig(servletContext));
@@ -64,6 +67,27 @@ public class TomcatServer {
             context.addApplicationListener("org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap");
             //resteasy和spring整合，有了这个，ContextLoaderListener就不要了
             //context.addApplicationListener("org.jboss.resteasy.plugins.spring.SpringContextLoaderListener");
+=======
+            ServletContext servletContext = context.getServletContext();
+            context.addLifecycleListener(new Tomcat.FixContextListener());
+            
+            /**
+             * 方案一 解决 推荐
+             */
+            Class<?> aClass = Class.forName("com.tian.spring.resteasy.impl.UserServiceImpl");
+            deployment.setActualResourceClasses(Lists.newArrayList(aClass));
+            servletContext.setAttribute(ResteasyDeployment.class.getName(), deployment);
+            dispatcher.init(new SimpleServletConfig(servletContext));
+
+            /**
+             * 方案二 可以手动配置
+             */
+//            context.addParameter("resteasy.resources", "com.tian.spring.resteasy.impl.UserServiceImpl");
+//            context.addParameter("resteasy.providers", "com.tian.spring.resteasy.excaption.NotFoundException");
+//            context.addApplicationListener("org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap");
+            // resteasy和spring整合，有了这个，ContextLoaderListener就不要了
+//            context.addApplicationListener("org.jboss.resteasy.plugins.spring.SpringContextLoaderListener");
+>>>>>>> 0a0bb18289d453574c6d3b6414da08d3c155f13b
 
             Tomcat.addServlet(context, "DispatcherServlet", dispatcher);
             context.addServletMappingDecoded("/*", "DispatcherServlet");
