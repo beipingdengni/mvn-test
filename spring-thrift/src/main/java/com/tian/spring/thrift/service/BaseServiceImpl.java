@@ -24,7 +24,7 @@ public class BaseServiceImpl implements BaseService.Iface {
         personVo.setName(name);
         personVo.setSex(sex);
         personVo.setAge(age);
-        System.out.println(personVo.toString());
+        System.out.println(personVo.toString() + System.currentTimeMillis());
         return personVo;
     }
 }

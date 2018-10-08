@@ -16,7 +16,7 @@ import org.apache.thrift.transport.TTransportException;
  * @Description:
  * @date 18/9/18下午4:07
  */
-public class ProviderMainTest {
+public class SimpleProviderServer {
     public static void main(String[] args) {
 
         try {
