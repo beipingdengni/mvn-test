@@ -15,6 +15,7 @@
         <feign.version>8.18.0</feign.version>
         <archaius.version>0.6.6</archaius.version>
         <jackson.version>2.9.7</jackson.version>
+        <hystrix.version>1.5.12</hystrix.version>
     </properties>
 
 
@@ -63,7 +64,7 @@
             <version>${archaius.version}</version>
         </dependency>
 
-        <!--hystrix-->
+        <!--hystrix feign-->
         <dependency>
             <groupId>com.netflix.feign</groupId>
             <artifactId>feign-hystrix</artifactId>
@@ -75,7 +76,12 @@
             <artifactId>feign-slf4j</artifactId>
             <version>${feign.version}</version>
         </dependency>
-
+        <!--hystrix  core-->
+        <dependency>
+            <groupId>com.netflix.hystrix</groupId>
+            <artifactId>hystrix-core</artifactId>
+            <version>${hystrix.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
