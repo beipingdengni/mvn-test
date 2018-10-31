@@ -41,6 +41,19 @@ public class EchoSelectorProtocol implements TCPProtocol {
         if (bytesRead == -1){
             clntChan.close();
         }else if(bytesRead > 0){
+            buf.flip();
+
+            //byte[] bytes = new byte[byteBuffer.remaining()];
+            //byteBuffer.get(bytes);
+            //System.out.println(new String(bytes, 0, bytes.length));
+            System.out.println(new String(buf.array(), 0, buf.limit()));
+
+            //将此键的 interest 集合设置为给定值
+            key.interestOps(SelectionKey.OP_WRITE);
+            //强迫selector返回, 使尚未返回的第一个选择操作立即返回, 即取消selector.select()的阻塞
+            //clntChan.wakeup();
+
+
             //如果缓冲区总读入了数据，则将该信道感兴趣的操作设置为为可读可写
             key.interestOps(SelectionKey.OP_READ | SelectionKey.OP_WRITE);
         }
@@ -50,13 +63,19 @@ public class EchoSelectorProtocol implements TCPProtocol {
     @Override
     public void handleWrite(SelectionKey key) throws IOException {
         // TODO Auto-generated method stub
-        ByteBuffer buffer=(ByteBuffer) key.attachment();
-        buffer.flip();
+//        ByteBuffer buffer=(ByteBuffer) key.attachment();
+//        buffer.flip();
+
         SocketChannel clntChan = (SocketChannel) key.channel();
+
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        buffer.put("客户端，我服务端收到消息了".getBytes());
+        buffer.flip();
+
+
         //将数据写入到信道中
         clntChan.write(buffer);
         if (!buffer.hasRemaining()){
-
             //如果缓冲区中的数据已经全部写入了信道，则将该信道感兴趣的操作设置为可读
             key.interestOps(SelectionKey.OP_READ);
         }

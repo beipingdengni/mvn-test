@@ -20,20 +20,29 @@ public class NIOServer {
     private static int TIME_OUT = 2000;
     public static void main(String[] args) throws IOException {
 
+        // 选择器 打开
         Selector selector = Selector.open();
+        // socket 通道选择
         ServerSocketChannel serverSocketChannel=ServerSocketChannel.open();
+        // 绑定监听接口
         serverSocketChannel.bind(new InetSocketAddress(10083));
+        // 设置阻塞 false
         serverSocketChannel.configureBlocking(false);
+        // 注册选择器，
         serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
 
+        // 自定义处理器
         TCPProtocol protocol = new EchoSelectorProtocol(BUFF_SIZE);
 
         while (true) {
+            // 等待选择链接
             if(selector.select(TIME_OUT)==0){
+//            if(selector.select()==0){
                 //在等待信道准备的同时，也可以异步地执行其他任务，  这里打印*
                 System.out.print("*");
                 continue;
             }
+            // 链接后，所有遍历处理
             Iterator<SelectionKey> keyIter = selector.selectedKeys().iterator();
             while (keyIter.hasNext()) {
                 SelectionKey key = keyIter.next();
