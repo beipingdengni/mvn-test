@@ -17,14 +17,15 @@ public class EchoSelectorProtocol implements TCPProtocol {
 
 
     private int bufSize; // 缓冲区的长度
-    public EchoSelectorProtocol(int bufSize){
+
+    public EchoSelectorProtocol(int bufSize) {
         this.bufSize = bufSize;
     }
 
     @Override
     public void handleAccept(SelectionKey key) throws IOException {
         System.out.println("Accept");
-        SocketChannel socketChannel = ((ServerSocketChannel)key.channel()).accept();
+        SocketChannel socketChannel = ((ServerSocketChannel) key.channel()).accept();
         socketChannel.configureBlocking(false);
         socketChannel.register(key.selector(), SelectionKey.OP_READ, ByteBuffer.allocate(bufSize));
 
@@ -38,9 +39,9 @@ public class EchoSelectorProtocol implements TCPProtocol {
         buf.clear();
         long bytesRead = clntChan.read(buf);
         //如果read（）方法返回-1，说明客户端关闭了连接，那么客户端已经接收到了与自己发送字节数相等的数据，可以安全地关闭
-        if (bytesRead == -1){
+        if (bytesRead == -1) {
             clntChan.close();
-        }else if(bytesRead > 0){
+        } else if (bytesRead > 0) {
             buf.flip();
 
             //byte[] bytes = new byte[byteBuffer.remaining()];
@@ -62,25 +63,26 @@ public class EchoSelectorProtocol implements TCPProtocol {
 
     @Override
     public void handleWrite(SelectionKey key) throws IOException {
-        // TODO Auto-generated method stub
-//        ByteBuffer buffer=(ByteBuffer) key.attachment();
-//        buffer.flip();
 
         SocketChannel clntChan = (SocketChannel) key.channel();
 
-        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        // TODO Auto-generated method stub
+        ByteBuffer buffer = (ByteBuffer) key.attachment();
+        buffer.clear();
+        
+//        ByteBuffer buffer = ByteBuffer.allocate(bufSize);
         buffer.put("客户端，我服务端收到消息了".getBytes());
         buffer.flip();
 
-
         //将数据写入到信道中
         clntChan.write(buffer);
-        if (!buffer.hasRemaining()){
+        if (!buffer.hasRemaining()) {
             //如果缓冲区中的数据已经全部写入了信道，则将该信道感兴趣的操作设置为可读
             key.interestOps(SelectionKey.OP_READ);
         }
         //为读入更多的数据腾出空间
         buffer.compact();
+//        buffer.clear();
 
     }
 
