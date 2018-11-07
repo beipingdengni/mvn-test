@@ -17,5 +17,15 @@
     <rabbit:template id="rabbitTemplate2" connection-factory="connectionFactory"
                      exchange="direct-exchange-queue" message-converter="jsonMessageConverter"/>
 
+    <!--使用 routing-key 分布处理 -->
+    <!--<rabbit:queue id="self-queue" name="self-queue" durable="true" auto-delete="false"/>-->
+    <!--<rabbit:direct-exchange id="self-exchange" name="self-exchange" durable="true" auto-delete="false">-->
+    <!--<rabbit:bindings>-->
+    <!--<rabbit:binding queue="self-queue" key="self-queue-key"></rabbit:binding>-->
+    <!--</rabbit:bindings>-->
+    <!--</rabbit:direct-exchange>-->
+    <!--<rabbit:template id="rabbitTemplate3" connection-factory="connectionFactory"-->
+    <!--exchange="self-exchange" routing-key="self-queue-key" message-converter="jsonMessageConverter"/>-->
+
 
 </beans>
