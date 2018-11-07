@@ -35,6 +35,9 @@ public class ConsumerMq {
 
         channel.queueDeclare(queue_name, false, false, false, null);
 
+        // 同一时刻服务器只会发一条消息给消费者
+        //channel.basicQos(1);
+
         // param: queue_name autoAck consumer
         channel.basicConsume(queue_name, true, new DefaultConsumer(channel) {
             @Override
