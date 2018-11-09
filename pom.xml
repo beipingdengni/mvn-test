@@ -27,6 +27,7 @@
         <module>spring-resteasy</module>
         <module>spring-undertow</module>
         <module>spring-ribbon-feign</module>
+        <module>spring-kafka</module>
     </modules>
     <packaging>pom</packaging>
 
