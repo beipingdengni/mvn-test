@@ -15,10 +15,32 @@
     <!--</rabbit:listener-container>-->
 
 
-    <rabbit:listener-container connection-factory="connectionFactory">
+    <rabbit:listener-container connection-factory="connectionFactory" concurrency="10">
         <rabbit:listener ref="spittleListener" method="onMessage"
                          queues="direct-queue-1"/>
     </rabbit:listener-container>
+
+
+    <!--
+    @Bean
+    public SimpleMessageListenerContainer messageContainer() {
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory());
+        container.setQueues(queue());
+        container.setExposeListenerChannel(true);
+        container.setMaxConcurrentConsumers(1);
+        container.setConcurrentConsumers(1);
+        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        container.setMessageListener(new ChannelAwareMessageListener() {
+
+            public void onMessage(Message message, com.rabbitmq.client.Channel channel) throws Exception {
+                byte[] body = message.getBody();
+                logger.info("消费端接收到消息 : " + new String(body));
+                channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+            }
+        });
+        return container;
+    }
+    -->
 
 
 </beans>

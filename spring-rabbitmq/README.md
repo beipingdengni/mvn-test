@@ -1,5 +1,89 @@
 ## mvn-test
 
+#### 事务处理   其他还有详细描述：参考文章[RabbitMQ事务和Confirm发送方消息确认——深入解读](https://www.cnblogs.com/vipstone/p/9350075.html)
+```text   
+// 创建连接  也是一个比较好的demo
+ConnectionFactory factory = new ConnectionFactory();
+factory.setUsername(config.UserName);
+factory.setPassword(config.Password);
+factory.setVirtualHost(config.VHost);
+factory.setHost(config.Host);
+factory.setPort(config.Port);   
+Connection conn = factory.newConnection();
+// 创建信道
+Channel channel = conn.createChannel();
+// 声明队列
+channel.queueDeclare(_queueName, true, false, false, null);
+String message = String.format("时间 => %s", new Date().getTime());
+try {
+    channel.txSelect(); // 声明事务
+    // 发送消息
+    channel.basicPublish("", _queueName, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes("UTF-8"));
+    channel.txCommit(); // 提交事务
+} catch (Exception e) {
+    channel.txRollback();
+} finally {
+    channel.close();
+    conn.close();
+}
+
+```
+
+##### spring--boot rabbitmq 操作消费者
+```text
+
+@Configuration
+@EnableRabbit
+public class AppConfig {
+    @Bean
+    public SimpleRabbitListenerContainerFactory myRabbitListenerContainerFactory() {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory());
+        factory.setMaxConcurrentConsumers(5);
+        return factory;
+    }
+    // other @Bean definitions
+}
+
+
+@Bean
+public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+    RabbitTemplate template = new RabbitTemplate(connectionFactory);
+    template.setMessageConverter(new Jackson2JsonMessageConverter());
+    return template;
+ }
+
+@Bean
+public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+    SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+    factory.setConnectionFactory(connectionFactory);
+    factory.setMessageConverter(new Jackson2JsonMessageConverter());
+    return factory;
+ }
+
+@RabbitListener(queues = "merchant", containerFactory="rabbitListenerContainerFactory")
+public void process(@Payload UpdateMerchant request) { 
+     UpdateMerchantResponse response = new UpdateMerchantResponse();
+    logger.info(request.getMerchantId() + "->" + response.getReturnCode());
+ }
+    
+```
+
+##### spring --消费者中配置
+```xml
+<!--忽略此问题:注意 两个exchange的时候, 需要用到declared-by 添加参数 ==默认：RabbitAdmins -->
+
+<!--使用 routing-key 分布处理 -->
+<!--<rabbit:queue id="self-queue" name="self-queue" durable="true" auto-delete="false" />-->
+<!--<rabbit:direct-exchange id="self-exchange" name="self-exchange" durable="true" auto-delete="false" >-->
+    <!--<rabbit:bindings>-->
+        <!--<rabbit:binding queue="self-queue" key="self-queue-key"></rabbit:binding>-->
+    <!--</rabbit:bindings>-->
+<!--</rabbit:direct-exchange>-->
+<!--<rabbit:template id="rabbitTemplate3" connection-factory="connectionFactory"-->
+        <!--exchange="self-exchange" routing-key="self-queue-key" message-converter="jsonMessageConverter"/>-->
+```
+
 ### 最简单的一个队列生产使用
 #### 生产着
 ```java
