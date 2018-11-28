@@ -1,6 +1,7 @@
 package com.tian.spring.common;
 
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * @author tianbeiping
@@ -17,6 +18,23 @@ public class StringUtil {
             return true;
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+
+        Random random = new Random();
+        int i = 0;
+        StringBuilder sb = new StringBuilder();
+        // 3800+50+2+10
+        // 3862
+        while (i < 3862) {
+            i++;
+            int i1 = random.nextInt(100);
+            sb.append("1931" + i1 + ",");
+        }
+        System.out.println(sb.toString());
+
+
     }
 
 }
