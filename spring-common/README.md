@@ -32,7 +32,7 @@ WriteNullStringAsEmpty—字符类型字段如果为null,输出为”“,而非n
 WriteNullBooleanAsFalse–Boolean字段如果为null,输出为false,而非null
 ```
 
-#### 堆排序 参考博客:[堆排序](http://www.cnblogs.com/jingmoxukong/p/4303826.html)
+#### 堆排序 参考博客:[堆排序](http://www.cnblogs.com/jingmoxukong/p/4303826.html) [其他排序可以参考](http://www.cnblogs.com/jingmoxukong/p/4329079.html)
 ```text
 堆是一棵顺序存储的完全二叉树。
 
