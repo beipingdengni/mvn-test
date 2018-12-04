@@ -27,7 +27,7 @@ public class StringUtil {
         StringBuilder sb = new StringBuilder();
         // 3800+50+2+10
         // 3862
-        while (i < 3862) {
+        while (i < 2000) {
             i++;
             int i1 = random.nextInt(100);
             sb.append("1931" + i1 + ",");
