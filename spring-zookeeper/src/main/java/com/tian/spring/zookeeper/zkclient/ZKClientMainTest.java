@@ -1,8 +1,7 @@
 package com.tian.spring.zookeeper.zkclient;
 
 import lombok.extern.slf4j.Slf4j;
-import org.I0Itec.zkclient.IZkChildListener;
-import org.I0Itec.zkclient.ZkClient;
+import org.I0Itec.zkclient.*;
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;
 
@@ -32,19 +31,52 @@ public class ZKClientMainTest {
 
         if (!client.exists(zkPath)) {
             client.create(zkPath, zkPath, CreateMode.PERSISTENT);
-            client.unsubscribeChildChanges(zkPath, (s, list) -> {
-                System.out.println(s);
-                System.out.println(list);
+            client.subscribeChildChanges(zkPath, (s, list) -> {
+                System.out.println("s: " + s + " list:" + list);
+            });
+
+            client.subscribeStateChanges(new IZkStateListener() {
+                @Override
+                public void handleStateChanged(Watcher.Event.KeeperState keeperState) throws Exception {
+
+                }
+
+                @Override
+                public void handleNewSession() throws Exception {
+
+                }
+
+                @Override
+                public void handleSessionEstablishmentError(Throwable throwable) throws Exception {
+
+                }
+            });
+
+            client.subscribeDataChanges(zkPath, new IZkDataListener() {
+                @Override
+                public void handleDataChange(String s, Object o) throws Exception {
+                    System.out.println(" handleDataChange s: " + s + " list:" + o);
+                }
+
+                @Override
+                public void handleDataDeleted(String s) throws Exception {
+                    System.out.println(" handleDataDeleted s: " + s);
+                }
             });
 
             client.writeData(zkPath, "hello world");
-            client.createEphemeralSequential(zkPath+"/a","asd");
+            Thread.sleep(2000);
+            client.createEphemeralSequential(zkPath + "/", "asd");
+            Thread.sleep(2000);
+            client.createEphemeralSequential(zkPath + "/", "asd---2");
+            Thread.sleep(2000);
 
             List<String> children = client.getChildren(zkPath);
             System.out.println(children);
         }
         client.deleteRecursive(zkPath);
 //        client.delete(zkPath);
+        Thread.sleep(2000);
 
     }
 
