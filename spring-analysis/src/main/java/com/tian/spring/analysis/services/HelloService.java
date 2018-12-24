@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 public class HelloService {
 
 
-    public void div(String name) {
+    public String div(String name) {
         System.out.println("HelloService====>" + name);
-        int s = 10 / 0;
+//        int s = 10 / 0;
+
+        return "ok=====";
     }
 }

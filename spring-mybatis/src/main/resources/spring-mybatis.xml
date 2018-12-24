@@ -9,7 +9,15 @@
 
     <!--<util:properties location="mysql-config.properties"/>-->
 
-    <context:property-placeholder location="classpath*:mysql-config.properties"/>
+    <!--<context:property-placeholder location="classpath*:mysql-config.properties"/>-->
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>mysql-config.properties</value>
+        </property>
+    </bean>
+
+    <context:component-scan base-package="com.tian.spring.mybatis.*"/>
 
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init">

@@ -17,7 +17,11 @@
     <select id="selectPersonList" resultType="java.util.Map" parameterType="map">
         select * from t_person
         where age>#{age}
-        and newDate<![CDATA[<=]]>#{dateNow}
+        and newDate<![CDATA[<=]]>now()
+    </select>
+
+    <select id="insertPerson" parameterType="java.util.Map" resultType="java.lang.Integer">
+        insert into t_person set name=#{name} , age =#{age} ,pwd=#{pwd},newDate=now()
     </select>
 
 </mapper>

@@ -1,10 +1,9 @@
 package com.tian.spring.analysis.services;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,8 +23,31 @@ public class AopHello {
     }
 
     @Before("pointcut()&&args(name)")
-    private void after(JoinPoint joinPoint, String name) {
-        System.out.println("poit ====>" + name);
+    private void before(JoinPoint joinPoint, String name) {
+        System.out.println("before  poit ====>" + name);
+    }
+
+
+    @After("pointcut()")
+    private void after(JoinPoint joinPoint) {
+        System.out.println("after poit ====>");
+    }
+
+    @AfterReturning(value = "pointcut()",returning = "ret")
+    private void after(JoinPoint joinPoint,String ret) {
+        System.out.println("AfterReturning  poit ====>");
+    }
+
+
+    @Around("pointcut()")
+    private Object Around(JoinPoint joinPoint) throws Throwable {
+
+        ProceedingJoinPoint proceedingJoinPoint = (ProceedingJoinPoint)joinPoint;
+        System.out.println("Around before poit ====>");
+        Object proceed = proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
+        System.out.println("Around after poit ====>");
+
+        return proceed;
     }
 
 

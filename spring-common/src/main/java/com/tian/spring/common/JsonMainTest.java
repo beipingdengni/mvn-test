@@ -91,14 +91,14 @@ public class JsonMainTest {
         ObjectMapper mapper = new ObjectMapper();
 
         PersonVo personVo = new PersonVo();
-        personVo.setName("123123");
-        personVo.setAddress("shang hai hui jia");
+        personVo.setUsername("123123");
+        personVo.setPassword("shang hai hui jia");
 
 
         String s = mapper.writeValueAsString(personVo);
 
 
-        String json = "{\"name\":\"123123\",\"id\":\"123123\",\"address\":\"shang hai hui jia\"}";
+        String json = "{\"username\":\"123123\",\"id\":\"123123\",\"password\":\"shang hai hui jia\"}";
         System.out.println(s);
 
         PersonVo personVo1 = mapper.readValue(json, PersonVo.class);

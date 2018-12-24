@@ -16,4 +16,6 @@ public interface PersonMapper {
 
     List<Map<String,Object>> selectPersonList(Map<String,Object> map);
 
+    Integer insertPerson(Map<String,Object> map);
+
 }

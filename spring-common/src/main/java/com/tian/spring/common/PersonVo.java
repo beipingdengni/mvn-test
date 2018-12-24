@@ -15,9 +15,10 @@ import lombok.Data;
 public class PersonVo {
 
 
-    private String name;
+    private String username;
 
-    private String address;
+    private String password;
+
 
 
 }
