@@ -1,5 +1,12 @@
 ## mvn-test
 
+基本相关技巧
+```text
+snowflake算法   https://doocs.github.io/advanced-java/#/docs/high-concurrency/database-shard-global-id-generate
+
+
+```
+
 ```xml
     <!--配置 spring  线程池-->
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
