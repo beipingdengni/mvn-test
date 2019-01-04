@@ -60,7 +60,8 @@ public class QuartzManager {
                 .build();
 
         sched.scheduleJob(jobDetail, trigger);
-        if (!sched.isShutdown()) {
+
+        if (sched.isShutdown()) {
 
             sched.start();
         }
