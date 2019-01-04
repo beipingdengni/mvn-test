@@ -80,7 +80,7 @@ public class QuartzManager {
 
         String oldTime = trigger.getCronExpression();
         if (!oldTime.equalsIgnoreCase(time)) {
-            JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(jobName,JOB_GROUP_NAME));
+            JobDetail jobDetail = scheduler.getJobDetail(JobKey.jobKey(jobName, JOB_GROUP_NAME));
             Class objJobClass = jobDetail.getJobClass();
             removeJob(jobName);
             addJob(jobName, objJobClass, time);
@@ -115,12 +115,20 @@ public class QuartzManager {
 
     public static void removeJob(String jobName, String jobGroupName, String triggerName, String triggerGroupName) throws SchedulerException {
         Scheduler scheduler = getStdSchedulerFactory().getScheduler();
-        // 停止触发器
-        scheduler.pauseTrigger(TriggerKey.triggerKey(triggerName, triggerGroupName));
-        // 移除触发器
-        scheduler.unscheduleJob(TriggerKey.triggerKey(triggerName, triggerGroupName));
-        // 删除任务
-        scheduler.deleteJob(JobKey.jobKey(jobName, jobGroupName));
+        TriggerKey triggerKey = TriggerKey.triggerKey(triggerName, triggerGroupName);
+        JobKey jobKey = JobKey.jobKey(jobName, jobGroupName);
+        if (scheduler.checkExists(triggerKey)) {
+            // 停止触发器
+            scheduler.pauseTrigger(triggerKey);
+            // 移除触发器
+            scheduler.unscheduleJob(triggerKey);
+        }
+
+        if (scheduler.checkExists(jobKey)) {
+            // 删除任务
+            scheduler.deleteJob(JobKey.jobKey(jobName, jobGroupName));
+        }
+
     }
 
 
