@@ -2,9 +2,11 @@ package com.tian.spring.quartz;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.matchers.GroupMatcher;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author tianbeiping
@@ -54,11 +56,23 @@ public class ScheduleFactoryMemoryMainTest implements Job {
 
         scheduler.start();
 
+        scheduler.getContext();
+
 
     }
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        System.out.println(" 启动开始执行job ===> " + System.currentTimeMillis());
+
+        Scheduler scheduler = jobExecutionContext.getScheduler();
+
+        try {
+            Set<JobKey> jobKeys1 = scheduler.getJobKeys(GroupMatcher.anyGroup());
+            jobKeys1.forEach(m -> System.out.println(m.getGroup() + ":" + m.getName()));
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(Thread.currentThread().getName() + " 启动开始执行job ===> " + System.currentTimeMillis());
     }
 
 }
