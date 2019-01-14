@@ -4,6 +4,7 @@
 
 # java 启动
 # nohup java -server -Xss128k -Xmx1024M -Xmx1024M -XX:MaxNewSize=512m  *.jar >/dev/null 2>&1 >&
+# java -server -Xms256m -Xmx256m -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=2347 -Djava.ext.dirs=. cn.mwee.monitor.paidui.PDMonitor
 # nohup sh *.sh &
 
 country="China"
