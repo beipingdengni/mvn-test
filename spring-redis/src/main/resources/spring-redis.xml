@@ -47,6 +47,8 @@
                 </bean>
             </set>
         </constructor-arg>
+        <constructor-arg name="timeout" value="3000"/>
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
     </bean>
     <bean id="clusterConnection" class="org.springframework.data.redis.connection.jedis.JedisClusterConnection">
         <constructor-arg ref="jedisCluster"/>
