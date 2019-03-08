@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- Thrift配置 -->
+    <bean id="thriftConfig" class="com.tian.spring.common.pool.thrift.ThriftServiceConfigItem" lazy-init="true">
+        <property name="serverIP" value="127.0.0.1"/>
+        <property name="serverPort" value="8080"/>
+        <property name="timeOut" value="5000"/>
+    </bean>
+
+    <!-- Thrift连接池 -->
+    <bean id="connectionProvider" class="com.tian.spring.common.pool.thrift.ConnectionProviderImpl">
+        <property name="thriftServiceConfigItem" ref="thriftConfig"/>
+    </bean>
+
+
+</beans>
