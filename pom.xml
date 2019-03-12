@@ -29,6 +29,7 @@
         <module>spring-ribbon-feign</module>
         <module>spring-kafka</module>
         <module>spring-redis</module>
+        <module>spring-hystrix</module>
     </modules>
     <packaging>pom</packaging>
 
