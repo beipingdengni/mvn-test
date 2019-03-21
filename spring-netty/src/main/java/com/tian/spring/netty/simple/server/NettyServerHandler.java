@@ -25,7 +25,7 @@ import java.time.format.DateTimeFormatter;
  * @Description:
  * @date 18/9/4上午5:03
  */
-//@ChannelHandler.Sharable
+@ChannelHandler.Sharable
 public class NettyServerHandler extends SimpleChannelInboundHandler<String> {
 
     private Object proxyClass;

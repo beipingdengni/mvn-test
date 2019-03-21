@@ -14,16 +14,24 @@
     <!-- 用dubbo协议在20880端口暴露服务 -->
     <!--<dubbo:protocol name="dubbo" port="20880" />-->
 
-    <dubbo:protocol name="rest" server="tomcat" port="9090" accepts="200" charset="utf8" contextpath="/" threads="200"/>
+    <dubbo:protocol name="rest"
+                    server="tomcat"
+                    port="9090"
+                    accepts="200"
+                    charset="utf8"
+                    extension=""
+                    contextpath="/"
+                    threads="200"/>
 
 
     <!--<dubbo:service protocol="rest" validation="true" timeout="1000" connections="200"-->
-                   <!--interface="com.tian.spring.dubbo.BaseInterface.UserService" ref="userService"/>-->
+    <!--interface="com.tian.spring.dubbo.BaseInterface.UserService" ref="userService"/>-->
 
     <dubbo:service protocol="rest"
                    validation="true"
                    timeout="1000"
                    connections="200"
+                   filter="myfilter"
                    interface="com.tian.spring.dubbo.http.HttpUserService"
                    ref="httpUserService"/>
 

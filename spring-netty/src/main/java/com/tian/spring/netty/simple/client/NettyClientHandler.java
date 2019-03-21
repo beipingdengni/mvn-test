@@ -1,14 +1,8 @@
 package com.tian.spring.netty.simple.client;
 
-import com.alibaba.fastjson.JSON;
-import com.tian.spring.netty.support.Request;
-import com.tian.spring.netty.support.Response;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import org.springframework.beans.BeanUtils;
-
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * @author tianbeiping
@@ -17,6 +11,7 @@ import java.time.format.DateTimeFormatter;
  * @Description:
  * @date 18/9/4上午5:06
  */
+@ChannelHandler.Sharable
 public class NettyClientHandler extends SimpleChannelInboundHandler<String> {
 
     @Override

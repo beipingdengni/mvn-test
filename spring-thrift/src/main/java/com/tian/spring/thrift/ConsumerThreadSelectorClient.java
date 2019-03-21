@@ -15,6 +15,8 @@ import org.apache.thrift.transport.TNonblockingServerSocket;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransportException;
 
+import java.util.stream.IntStream;
+
 /**
  * @author tianbeiping
  * @Title: IconLabelData
@@ -26,20 +28,43 @@ public class ConsumerThreadSelectorClient {
 
     public static void main(String[] args) throws TException, InterruptedException {
 
+        IntStream.range(0, 500).forEach(e -> {
 
-        TFramedTransport transport = new TFramedTransport(new TSocket("127.0.0.1", 9009, 5000));
+            new Thread(() -> {
 
-        TProtocol protocol = new TCompactProtocol(transport);
+                try {
+                    TFramedTransport transport = new TFramedTransport(new TSocket("127.0.0.1", 9009, 5000));
+                    TProtocol protocol = new TCompactProtocol(transport);
+                    BaseService.Client client = new BaseService.Client(protocol);
+                    transport.open();
+//                    transport.close();
+                    while (true) {
+                        PersonVo result = client.dealPerson("liyao", "nan", 18);
+//                        Thread.sleep(200);
+                        System.out.println(result.toString());
+                    }
 
-        BaseService.Client client = new BaseService.Client(protocol);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
 
-        transport.open();
+            }).start();
 
-        PersonVo result = client.dealPerson("liyao", "nan", 18);
+        });
 
-        System.out.println(result.toString());
-
-        transport.close();
+//        TFramedTransport transport = new TFramedTransport(new TSocket("127.0.0.1", 9009, 5000));
+//
+//        TProtocol protocol = new TCompactProtocol(transport);
+//
+//        BaseService.Client client = new BaseService.Client(protocol);
+//
+//        transport.open();
+//
+//        PersonVo result = client.dealPerson("liyao", "nan", 18);
+//
+//        System.out.println(result.toString());
+//
+//        transport.close();
 
     }
 }

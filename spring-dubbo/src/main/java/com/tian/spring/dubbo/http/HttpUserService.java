@@ -16,13 +16,13 @@ import javax.ws.rs.Produces;
  * @date 18/9/14下午1:48
  */
 
-@Path("user")
+@Path("users")
 @Produces("application/json;charset=utf-8")
 @Consumes("*/*")
 public interface HttpUserService {
 
-    @Path("index")
     @GET
+    @Path("index")
     UserVo createUser();
 
 }
