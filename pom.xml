@@ -30,6 +30,7 @@
         <module>spring-kafka</module>
         <module>spring-redis</module>
         <module>spring-hystrix</module>
+        <module>spring-spel</module>
     </modules>
     <packaging>pom</packaging>
 
