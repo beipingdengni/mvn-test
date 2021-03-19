@@ -15,7 +15,7 @@
 
     <properties>
         <!--<tomcat.embed.verion>9.0.11</tomcat.embed.verion>-->
-        <tomcat.embed.verion>8.5.5</tomcat.embed.verion>
+        <tomcat.embed.verion>10.0.4</tomcat.embed.verion>
     </properties>
 
     <dependencies>
