@@ -15,7 +15,7 @@
         <!--<resteasy.verison>3.6.1.Final</resteasy.verison>-->
         <resteasy.verison>3.0.19.Final</resteasy.verison>
         <resteasy-api.verison>3.0.12.Final</resteasy-api.verison>
-        <tomcat.embed.verion>8.5.5</tomcat.embed.verion>
+        <tomcat.embed.verion>8.5.61</tomcat.embed.verion>
     </properties>
 
     <dependencies>
