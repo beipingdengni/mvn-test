@@ -12,7 +12,7 @@
     <artifactId>spring-jetty</artifactId>
 
     <properties>
-        <jetty.verison>9.4.12.v20180830</jetty.verison>
+        <jetty.verison>9.4.41.v20210516</jetty.verison>
     </properties>
 
     <dependencies>
