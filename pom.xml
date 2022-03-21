@@ -37,7 +37,7 @@
 
     <properties>
         <spring.verison>5.0.8.RELEASE</spring.verison>
-        <dubbo.version>2.6.2</dubbo.version>
+        <dubbo.version>2.6.9</dubbo.version>
         <apache.logging.verion>2.10.0</apache.logging.verion>
         <slf4j.verison>1.7.25</slf4j.verison>
         <jdbc.verion>6.0.2</jdbc.verion>
