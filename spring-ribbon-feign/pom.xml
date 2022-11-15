@@ -14,7 +14,7 @@
     <properties>
         <feign.version>8.18.0</feign.version>
         <archaius.version>0.6.6</archaius.version>
-        <jackson.version>2.9.7</jackson.version>
+        <jackson.version>2.13.4.1</jackson.version>
         <hystrix.version>1.5.12</hystrix.version>
     </properties>
 
